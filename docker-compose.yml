@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  elixir:
+    image: h3poteto/elixir-node:1.9.1-node10-slim-stretch
+    volumes:
+      - .:/var/opt/app
+    links:
+      - postgres:postgres
+    ports:
+      - "4000:4000"
+    command: /bin/bash
+
+  postgres:
+    image: postgres:11.2-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: masuda_stream
+    volumes:
+      - storage:/var/lib/postgres/data
+
+volumes:
+  storage:
