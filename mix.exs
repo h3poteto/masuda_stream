@@ -42,7 +42,14 @@ defmodule MasudaStream.MixProject do
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:httpoison, "~> 1.6"},
+      {:feeder_ex, "~> 1.1"},
+      {:ex_rfc3986, "~> 0.2.7"},
+      {:floki, "~> 0.23.0"},
+      {:html5ever, "~> 0.7.0"},
+      {:plug, "~> 1.0"},
+      {:json, "~> 1.2"}
     ]
   end
 
