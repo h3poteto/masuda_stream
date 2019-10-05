@@ -4,7 +4,6 @@ defmodule MasudaStream.Hatena.Entry do
   @timestamps_opts [type: :utc_datetime]
 
   schema "hatena_entries" do
-    field :identifier, :string
     field :title, :string
     field :summary, :string
     field :content, :string
@@ -20,7 +19,7 @@ defmodule MasudaStream.Hatena.Entry do
   @doc false
   def changeset(entry, attrs) do
     entry
-    |> cast(attrs, [:identifier, :title, :summary, :content, :link, :hatena_bookmarkcount, :posted_at])
-    |> validate_required([:identifier, :title, :link, :hatena_bookmarkcount, :posted_at])
+    |> cast(attrs, [:title, :summary, :content, :link, :hatena_bookmarkcount, :posted_at])
+    |> validate_required([:title, :link, :hatena_bookmarkcount, :posted_at])
   end
 end

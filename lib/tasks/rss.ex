@@ -1,21 +1,97 @@
 defmodule MasudaStream.Tasks.RSS do
+  use Timex
+  alias MasudaStream.Repo
   require Logger
 
   @hatena_domain "https://b.hatena.ne.jp"
   @anond_url  "https://anond.hatelabo.jp/"
 
+  def get() do
+    fetch()
+    |> Enum.map(fn(item) ->
+      item |> parse()
+    end)
+    |> Enum.map(fn(item) ->
+      item |> save_entry()
+    end)
+  end
+
   def fetch() do
-    Logger.info("Fetching...")
 
     {:ok, pid} = Task.Supervisor.start_link()
     rss_url = "#{@hatena_domain}/entrylist?mode=rss&url=#{@anond_url}&sort=recent"
+    Logger.info("Fetching #{rss_url} ...")
     {:ok, %HTTPoison.Response{body: body}} = HTTPoison.get(rss_url)
-    {:ok, feed, _} = FeederEx.parse(body)
+    body
+    |> Quinn.parse()
+    |> Quinn.find(:item)
+    # feed.entries
+    # |> Enum.map(fn(entry) ->
+    #   Task.Supervisor.start_child(pid, MasudaStream.Tasks.Anond, :get, [entry.link])
+    #   Task.Supervisor.start_child(pid, MasudaStream.Tasks.Bookmark, :get, [entry.link])
+    # end)
+  end
 
-    feed.entries
-    |> Enum.map(fn(entry) ->
-      Task.Supervisor.start_child(pid, MasudaStream.Tasks.Anond, :get, [entry.link])
-      Task.Supervisor.start_child(pid, MasudaStream.Tasks.Bookmark, :get, [entry.link])
-    end)
+  def parse(item) do
+    %{
+      title: parse_title(item),
+      summary: parse_summary(item),
+      content: parse_content(item),
+      link: parse_link(item),
+      hatena_bookmarkcount: parse_hatena_bookmarkcount(item),
+      posted_at: parse_posted_at(item)
+    }
+  end
+
+  defp parse_title(item) do
+    [%{attr: _, name: :title, value: [title]}] = item |> Quinn.find(:title)
+    title
+  end
+
+  defp parse_summary(item) do
+    case item |> Quinn.find(:description) do
+      [%{attr: _, name: :description, value: [summary]}] -> summary
+      _ -> nil
+    end
+  end
+
+  defp parse_content(item) do
+    [%{attr: _, name: :"content:encoded", value: [content]}] = item |> Quinn.find(:"content:encoded")
+    content
+  end
+
+  defp parse_link(item) do
+    [%{attr: _, name: :link, value: [link]}] = item |> Quinn.find(:link)
+    link
+  end
+
+  defp parse_hatena_bookmarkcount(item) do
+    [%{attr: _, name: :"hatena:bookmarkcount", value: [hatena_bookmarkcount]}] = item |> Quinn.find(:"hatena:bookmarkcount")
+    hatena_bookmarkcount |> String.to_integer(10)
+  end
+
+  defp parse_posted_at(item) do
+    # Timezone in RSS is UTC. The format is "2019-10-05T13:46:58Z".
+    [%{attr: _, name: :"dc:date", value: [posted_at]}] = item |> Quinn.find(:"dc:date")
+    posted_at
+    |> Timex.parse!("{ISO:Extended:Z}")
+  end
+
+  defp save_entry(%{title: title, summary: summary, link: link, content: content, hatena_bookmarkcount: hatena_bookmarkcount, posted_at: posted_at}) do
+    case Repo.get_by(MasudaStream.Hatena.Entry, link: link) do
+      nil -> %MasudaStream.Hatena.Entry{link: link}
+      entry -> entry
+    end
+    |> MasudaStream.Hatena.Entry.changeset(
+      %{
+        "title" => title,
+        "summary" => summary,
+        "content" => content,
+        "link" => link,
+        "hatena_bookmarkcount" => hatena_bookmarkcount,
+        "posted_at" => posted_at
+      }
+    )
+    |> Repo.insert_or_update
   end
 end

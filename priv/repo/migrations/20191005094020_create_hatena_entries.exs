@@ -3,7 +3,6 @@ defmodule MasudaStream.Repo.Migrations.CreateHatenaEntries do
 
   def change do
     create table(:hatena_entries) do
-      add :identifier, :string, null: false
       add :title, :string, null: false
       add :summary, :text
       add :content, :text
@@ -14,6 +13,6 @@ defmodule MasudaStream.Repo.Migrations.CreateHatenaEntries do
       timestamps([type: :utc_datetime])
     end
 
-    create unique_index(:hatena_entries, [:identifier])
+    create unique_index(:hatena_entries, [:link])
   end
 end
