@@ -2,7 +2,8 @@ version: '3'
 
 services:
   elixir:
-    image: h3poteto/elixir-node:1.9.1-node10-slim-stretch
+    image: h3poteto/elixir-rust-node:1.9.1-rust1.38-node10-slim-stretch
+    working_dir: /var/opt/app
     volumes:
       - .:/var/opt/app
     links:
