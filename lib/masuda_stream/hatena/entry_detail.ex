@@ -19,6 +19,6 @@ defmodule MasudaStream.Hatena.EntryDetail do
     entry_detail
     |> cast(attrs, [:eid, :count, :url, :title, :screenshot, :entry_id])
     |> validate_required([:eid, :count, :url, :title, :screenshot, :entry_id])
-    |> assoc_constraint([:entry])
+    |> assoc_constraint(:entry)
   end
 end

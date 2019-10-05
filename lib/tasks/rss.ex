@@ -1,7 +1,8 @@
 defmodule MasudaStream.Tasks.RSS do
   use Timex
-  alias MasudaStream.Repo
   require Logger
+  alias MasudaStream.Repo
+
 
   @hatena_domain "https://b.hatena.ne.jp"
   @anond_url  "https://anond.hatelabo.jp/"
@@ -14,11 +15,11 @@ defmodule MasudaStream.Tasks.RSS do
     |> Enum.map(fn(item) ->
       item |> save_entry()
     end)
+    |> get_anonds()
+
   end
 
   def fetch() do
-
-    {:ok, pid} = Task.Supervisor.start_link()
     rss_url = "#{@hatena_domain}/entrylist?mode=rss&url=#{@anond_url}&sort=recent"
     Logger.info("Fetching #{rss_url} ...")
     {:ok, %HTTPoison.Response{body: body}} = HTTPoison.get(rss_url)
@@ -92,6 +93,14 @@ defmodule MasudaStream.Tasks.RSS do
         "posted_at" => posted_at
       }
     )
-    |> Repo.insert_or_update
+    |> Repo.insert_or_update!()
+  end
+
+  def get_anonds(entries) do
+    {:ok, pid} = Task.Supervisor.start_link()
+    entries
+    |> Enum.map(fn(entry) ->
+      Task.Supervisor.start_child(pid, MasudaStream.Tasks.Anond, :get, [entry])
+    end)
   end
 end
