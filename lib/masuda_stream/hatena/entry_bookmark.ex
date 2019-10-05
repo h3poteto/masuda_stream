@@ -15,7 +15,8 @@ defmodule MasudaStream.Hatena.EntryBookmark do
   def changeset(entry_bookmark, attrs) do
     entry_bookmark
     |> cast(attrs, [:bookmarked_at, :comment, :user, :entry_detail_id])
-    |> validate_required([:bookmarked_at, :comment, :user, :entry_detail_id])
+    |> validate_required([:bookmarked_at, :user, :entry_detail_id])
+    |> unique_constraint(:entry_detail_id_and_user, name: :entry_bookmarks_on_entry_dtail_id_and_user_index)
     |> assoc_constraint(:entry_detail)
   end
 end

@@ -16,7 +16,7 @@ defmodule MasudaStream.Tasks.RSS do
       item |> save_entry()
     end)
     |> get_anonds()
-
+    |> get_bookmarks()
   end
 
   def fetch() do
@@ -26,11 +26,6 @@ defmodule MasudaStream.Tasks.RSS do
     body
     |> Quinn.parse()
     |> Quinn.find(:item)
-    # feed.entries
-    # |> Enum.map(fn(entry) ->
-    #   Task.Supervisor.start_child(pid, MasudaStream.Tasks.Anond, :get, [entry.link])
-    #   Task.Supervisor.start_child(pid, MasudaStream.Tasks.Bookmark, :get, [entry.link])
-    # end)
   end
 
   def parse(item) do
@@ -101,6 +96,15 @@ defmodule MasudaStream.Tasks.RSS do
     entries
     |> Enum.map(fn(entry) ->
       Task.Supervisor.start_child(pid, MasudaStream.Tasks.Anond, :get, [entry])
+    end)
+    entries
+  end
+
+  def get_bookmarks(entries) do
+    {:ok, pid} = Task.Supervisor.start_link()
+    entries
+    |> Enum.map(fn(entry) ->
+      Task.Supervisor.start_child(pid, MasudaStream.Tasks.Bookmark, :get, [entry])
     end)
   end
 end
