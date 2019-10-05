@@ -13,5 +13,6 @@ defmodule MasudaStream.Repo.Migrations.CreateHatenaEntryDetails do
       timestamps([type: :utc_datetime])
     end
 
+    create unique_index(:hatena_entry_details, [:entry_id])
   end
 end

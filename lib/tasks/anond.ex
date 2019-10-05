@@ -1,9 +1,10 @@
 defmodule MasudaStream.Tasks.Anond do
   require Logger
+  alias MasudaStream.Repo
 
-  def get(url) do
-    fetch(url)
-    # TODO: save
+  def get(%MasudaStream.Hatena.Entry{} = entry) do
+    fetch(entry.link)
+    |> save_anond(entry)
   end
 
   def fetch(url) do
@@ -50,5 +51,23 @@ defmodule MasudaStream.Tasks.Anond do
 
   defp only_body([_, _start, body, _end, _]) do
     body
+  end
+
+  defp only_body(struct) do
+    # Sometimes the entry was deleted, so we can not get entry from anond.
+    Logger.error("could not parse body: #{inspect(struct)}")
+    []
+  end
+
+  defp save_anond(content_html, %MasudaStream.Hatena.Entry{} = entry) do
+    case Repo.get_by(MasudaStream.Anond, entry_id: entry.id) do
+      nil -> %MasudaStream.Anond{entry_id: entry.id}
+      anond -> anond
+    end
+    |> MasudaStream.Anond.changeset(
+      %{
+        "content_html" => content_html
+      }
+    ) |> Repo.insert_or_update!()
   end
 end

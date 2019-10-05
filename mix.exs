@@ -44,12 +44,14 @@ defmodule MasudaStream.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:httpoison, "~> 1.6"},
-      {:feeder_ex, "~> 1.1"},
       {:ex_rfc3986, "~> 0.2.7"},
       {:floki, "~> 0.23.0"},
       {:html5ever, "~> 0.7.0"},
       {:plug, "~> 1.0"},
-      {:json, "~> 1.2"}
+      {:json, "~> 1.2"},
+      # To parse RSS 1.0
+      {:quinn, "~> 1.1"},
+      {:timex, "~> 3.5"}
     ]
   end
 

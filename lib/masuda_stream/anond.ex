@@ -14,7 +14,7 @@ defmodule MasudaStream.Anond do
   def changeset(anond, attrs) do
     anond
     |> cast(attrs, [:content_html, :entry_id])
-    |> validate_required([:content_html, :entry_id])
-    |> assoc_constraint([:entry])
+    |> validate_required([:entry_id])
+    |> assoc_constraint(:entry)
   end
 end
