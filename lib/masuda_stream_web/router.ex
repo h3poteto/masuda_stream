@@ -17,10 +17,17 @@ defmodule MasudaStreamWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/entries/:id", PageController, :index
+    get "/bookmarks", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", MasudaStreamWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", MasudaStreamWeb do
+
+    scope "/masuda", Masuda, as: :masuda do
+      pipe_through :api
+      resources "/entries", EntriesController, only: [:index, :show] do
+        get "/bookmarks", Entries.BookmarksController, :index
+      end
+    end
+  end
 end
