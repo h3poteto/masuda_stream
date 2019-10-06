@@ -1,43 +1,42 @@
 <template>
-<div class="margin-container">
-  <el-row :gutter="20">
-    <el-col :span="18">
-      <div class="grid-content">
-        <div class="entry" v-for="entry in entries" v-bind:key="entry.id" v-on:click="openEntryDetail(entry.id)">
-          <el-card class="box-card entry-card">
-            <div slot="header" class="clearfix">
-              <span>{{ entry.title }}</span>
-            </div>
-            <div>
-              {{ entry.summary }}
-            </div>
-            <div class="line"></div>
-            <div class="tool-box">
-              <div class="comment">
-                <icon name="comment"></icon>
-                <span>{{ entry.hatena_bookmarkcount }}</span>
+  <div class="margin-container">
+    <el-row :gutter="20">
+      <el-col :span="18">
+        <div class="grid-content">
+          <div class="entry" v-for="entry in entries" v-bind:key="entry.id" v-on:click="openEntryDetail(entry.id)">
+            <el-card class="box-card entry-card">
+              <div slot="header" class="clearfix">
+                <span>{{ entry.title }}</span>
               </div>
-              <div class="date">
-                {{ parseDatetime(entry.posted_at) }}
+              <div>
+                {{ entry.summary }}
               </div>
-              <div class="clearfix"></div>
-            </div>
+              <div class="line"></div>
+              <div class="tool-box">
+                <div class="comment">
+                  <icon name="comment"></icon>
+                  <span>{{ entry.hatena_bookmarkcount }}</span>
+                </div>
+                <div class="date">
+                  {{ parseDatetime(entry.posted_at) }}
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </el-card>
+          </div>
+          <el-card class="box-card loading-card" v-loading="lazyloading"> </el-card>
+        </div>
+      </el-col>
+      <el-col :span="6">
+        <div class="grid-content">
+          <el-card class="box-card">
+            <sidemenu></sidemenu>
           </el-card>
         </div>
-        <el-card class="box-card loading-card" v-loading="lazyloading">
-        </el-card>
-      </div>
-    </el-col>
-    <el-col :span="6">
-      <div class="grid-content">
-        <el-card class="box-card">
-          <sidemenu></sidemenu>
-        </el-card>
-      </div>
-    </el-col>
-  </el-row>
-  <router-view></router-view>
-</div>
+      </el-col>
+    </el-row>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
@@ -46,12 +45,11 @@ import moment from 'moment'
 import Vue from 'vue'
 import Sidemenu from '../Sidemenu'
 
-
 export default {
   computed: {
     ...mapState({
       entries: state => state.Stream.Index.entries,
-      lazyloading: state => state.Stream.Index.lazyloading,
+      lazyloading: state => state.Stream.Index.lazyloading
     })
   },
   created() {
@@ -63,12 +61,17 @@ export default {
   },
   methods: {
     parseDatetime(datetime) {
-      // unixtimeでもらったものはutcなのでjstに変換する必要がある
-      return moment.unix(datetime).add(9, 'hours').format('YYYY-MM-DD HH:mm')
+      return moment.unix(datetime).format('YYYY-MM-DD HH:mm')
     },
     onScroll(event) {
-      if (((document.documentElement.clientHeight + event.pageY) >= event.target.body.clientHeight - 10) && !this.$store.state.Stream.Index.lazyloading) {
-        this.$store.dispatch('Stream/Index/lazyFetchEntries', this.$store.state.Stream.Index.entries[this.$store.state.Stream.Index.entries.length - 1].posted_at)
+      if (
+        document.documentElement.clientHeight + event.pageY >= event.target.body.clientHeight - 10 &&
+        !this.$store.state.Stream.Index.lazyloading
+      ) {
+        this.$store.dispatch(
+          'Stream/Index/lazyFetchEntries',
+          this.$store.state.Stream.Index.entries[this.$store.state.Stream.Index.entries.length - 1].posted_at
+        )
       }
     },
     openEntryDetail(entryId) {
@@ -84,7 +87,6 @@ Vue.component('sidemenu', Sidemenu)
 
 <style lang="scss" scoped>
 .margin-container {
-
   .entry-card {
     cursor: pointer;
     margin-bottom: 0.5em;
@@ -101,7 +103,7 @@ Vue.component('sidemenu', Sidemenu)
     }
 
     .tool-box {
-      padding: 0 1.0em;
+      padding: 0 1em;
       color: #c0c4cc;
 
       .comment {

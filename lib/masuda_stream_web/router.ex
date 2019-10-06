@@ -19,8 +19,11 @@ defmodule MasudaStreamWeb.Router do
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", MasudaStreamWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", MasudaStreamWeb do
+
+    scope "/masuda", Masuda, as: :masuda do
+      pipe_through :api
+      resources "/entries", EntriesController, only: [:index, :show]
+    end
+  end
 end
