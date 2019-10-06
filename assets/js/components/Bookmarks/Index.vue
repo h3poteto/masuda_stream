@@ -1,69 +1,87 @@
 <template>
-<div class="margin-container">
-  <el-row :gutter="20">
-    <el-col :span="18">
-      <div class="gird-content not-login" v-if="!isLoggedIn()">
-        <el-button type="primary" @click="login">ログインしてブックマークを確認</el-button>
-      </div>
-      <div class="grid-content feed" v-if="isLoggedIn()">
-        <el-card class="box-card bookmark-card" v-for="bookmark in bookmarks" v-bind:key="bookmark.id">
-          <div class="title"><h4><a :href="bookmark.link[0]['@href']" target="_blank">{{ bookmark.title }}</a></h4></div>
-          <div class="link"><a :href="bookmark.link[0]['@href']" target="_blank">{{ bookmark.link[0]['@href'] }}</a></div>
-          <div class="bookmark">
-            <div class="icon"><img :src="user.avatar_url" /></div>
-            <div class="head-wrapper">
-              <div class="user">{{ user.uid }}</div>
-              <div class="bookmarked_at">{{ fixDatetime(bookmark.issued) }}</div>
+  <div class="margin-container">
+    <el-row :gutter="20">
+      <el-col :span="18">
+        <div class="gird-content not-login" v-if="!isLoggedIn()">
+          <el-button type="primary" @click="login"
+            >ログインしてブックマークを確認</el-button
+          >
+        </div>
+        <div class="grid-content feed" v-if="isLoggedIn()">
+          <el-card
+            class="box-card bookmark-card"
+            v-for="bookmark in bookmarks"
+            v-bind:key="bookmark.id"
+          >
+            <div class="title">
+              <h4>
+                <a :href="bookmark.link[0]['@href']" target="_blank">{{
+                  bookmark.title
+                }}</a>
+              </h4>
             </div>
-            <div class="comment">{{ bookmark.summary }}</div>
-            <div class="clearfix"></div>
-          </div>
-        </el-card>
-      </div>
-    </el-col>
-    <el-col :span="6">
-      <div class="grid-content">
-        <el-card class="box-card">
-          <sidemenu></sidemenu>
-        </el-card>
-      </div>
-    </el-col>
-  </el-row>
-</div>
+            <div class="link">
+              <a :href="bookmark.link[0]['@href']" target="_blank">{{
+                bookmark.link[0]["@href"]
+              }}</a>
+            </div>
+            <div class="bookmark">
+              <div class="icon"><img :src="user.avatar_url" /></div>
+              <div class="head-wrapper">
+                <div class="user">{{ user.uid }}</div>
+                <div class="bookmarked_at">
+                  {{ fixDatetime(bookmark.issued) }}
+                </div>
+              </div>
+              <div class="comment">{{ bookmark.summary }}</div>
+              <div class="clearfix"></div>
+            </div>
+          </el-card>
+        </div>
+      </el-col>
+      <el-col :span="6">
+        <div class="grid-content">
+          <el-card class="box-card">
+            <sidemenu></sidemenu>
+          </el-card>
+        </div>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import moment from 'moment'
-import Vue from 'vue'
-import Sidemenu from '../Sidemenu'
+import { mapState } from "vuex";
+import moment from "moment";
+import Vue from "vue";
+import Sidemenu from "@/components/Sidemenu";
 
 export default {
   computed: {
     ...mapState({
       user: state => state.GlobalHeader.user,
-      bookmarks: state => state.Bookmarks.Index.bookmarks,
+      bookmarks: state => state.Bookmarks.Index.bookmarks
     })
   },
   created() {
-    this.$store.dispatch('GlobalHeader/changeActiveIndex', '2')
-    this.$store.dispatch('Bookmarks/Index/fetchBookmarks')
+    this.$store.dispatch("GlobalHeader/changeActiveIndex", "2");
+    this.$store.dispatch("Bookmarks/Index/fetchBookmarks");
   },
   methods: {
     isLoggedIn() {
-      return this.user !== null
+      return this.user !== null;
     },
     login() {
-      return window.location.href = '/accounts/login'
+      return (window.location.href = "/accounts/login");
     },
     fixDatetime(datetime) {
       // YYYY-MM-DDTHH:mm:ssをYYYY-MM-DD HH:mmにしたい
-      return moment(datetime).format('YYYY-MM-DD HH:mm')
+      return moment(datetime).format("YYYY-MM-DD HH:mm");
     }
   }
-}
+};
 
-Vue.component('sidemenu', Sidemenu)
+Vue.component("sidemenu", Sidemenu);
 </script>
 
 <style lang="scss" scoped>
@@ -72,7 +90,6 @@ Vue.component('sidemenu', Sidemenu)
 }
 
 .feed {
-
   .title {
     a:link,
     a:visited,
@@ -112,13 +129,13 @@ Vue.component('sidemenu', Sidemenu)
     .head-wrapper {
       .user {
         float: left;
-        color: #409EFF;
+        color: #409eff;
       }
 
       .bookmarked_at {
         width: 100%;
         text-align: right;
-        color: #C0C4CC;
+        color: #c0c4cc;
       }
     }
   }
