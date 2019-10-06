@@ -1,0 +1,1 @@
+<a href=<%= Routes.auth_path(@conn, :new, :hatena) %>>Sign in with Hatena</a>
