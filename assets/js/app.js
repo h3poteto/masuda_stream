@@ -1,17 +1,21 @@
-// We need to import the CSS so that webpack will load it.
-// The MiniCssExtractPlugin is used to separate it out into
-// its own CSS file.
-import css from "../css/app.css"
+import Vue from "vue";
+import VueCookie from "vue-cookie";
+import ElementUI from "element-ui";
+import "element-ui/lib/theme-chalk/index.css";
+import "vue-awesome/icons";
+import Icon from "vue-awesome/components/Icon";
+import { loadProgressBar } from "axios-progress-bar";
+import "axios-progress-bar/dist/nprogress.css";
+import router from "./router";
+import store from "./vuex";
 
-// webpack automatically bundles all modules in your
-// entry points. Those entry points can be configured
-// in "webpack.config.js".
-//
-// Import dependencies
-//
-import "phoenix_html"
+loadProgressBar();
 
-// Import local files
-//
-// Local files can be imported directly using relative paths, for example:
-// import socket from "./socket"
+Vue.component("icon", Icon);
+Vue.use(VueCookie);
+Vue.use(ElementUI);
+
+new Vue({
+  router,
+  store
+}).$mount("#app");

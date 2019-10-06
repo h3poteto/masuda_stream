@@ -1,9 +1,12 @@
-const path = require('path');
-const glob = require('glob');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require("path");
+const glob = require("glob");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const { VueLoaderPlugin } = require("vue-loader");
+
+const production = process.env.NODE_ENV === "production";
+const filename = production ? "[name]-[hash]" : "[name]";
 
 module.exports = (env, options) => ({
   optimization: {
@@ -13,29 +16,72 @@ module.exports = (env, options) => ({
     ]
   },
   entry: {
-    './js/app.js': glob.sync('./vendor/**/*.js').concat(['./js/app.js'])
+    "js/app": path.resolve(__dirname, "./js/app.js")
   },
   output: {
-    filename: 'app.js',
-    path: path.resolve(__dirname, '../priv/static/js')
+    filename: `${filename}.js`,
+    path: path.resolve(__dirname, "../priv/static")
+  },
+  resolve: {
+    alias: {
+      // Same as tsconfig.json
+      "@": path.join(__dirname, "./js"),
+      "~": path.join(__dirname, "./"),
+      vue$: "vue/dist/vue.esm.js"
+    },
+    extensions: [".ts", ".js", ".vue", ".json", ".css", ".node"]
   },
   module: {
     rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader'
-        }
+        use: ["babel-loader"]
+      },
+      {
+        test: /\.vue?$/,
+        use: [
+          {
+            loader: "vue-loader",
+            options: {
+              esModule: true,
+              optimizeSSR: false
+            }
+          }
+        ]
+      },
+      {
+        test: /\.scss$/,
+        use: ["vue-style-loader", "css-loader", "sass-loader"]
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
+        use: ["style-loader", "css-loader", "sass-loader"]
+      },
+      {
+        test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+        use: "url-loader?limit=10000&mimetype=application/font-woff"
+      },
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        use: "url-loader?limit=10000&mimetype=application/octet-stream"
+      },
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        use: "file-loader"
+      },
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        use: "url-loader?limit=10000&mimetype=image/svg+xml"
+      },
+      {
+        test: /\.(jpg|png)$/,
+        use: "url-loader"
       }
     ]
   },
   plugins: [
-    new MiniCssExtractPlugin({ filename: '../css/app.css' }),
-    new CopyWebpackPlugin([{ from: 'static/', to: '../' }])
+    new VueLoaderPlugin(),
+    new CopyWebpackPlugin([{ from: "static/", to: "../" }])
   ]
 });
