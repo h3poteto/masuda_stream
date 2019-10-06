@@ -11,27 +11,15 @@
           @select="handleSelect"
         >
           <span class="title-logo">MasudaStream</span>
-          <el-menu-item index="1" :route="{ path: '/' }"
-            >エントリー</el-menu-item
-          >
-          <el-menu-item index="2" :route="{ path: '/bookmarks' }"
-            >ブックマーク</el-menu-item
-          >
+          <el-menu-item index="1" :route="{ path: '/' }">エントリー</el-menu-item>
+          <el-menu-item index="2" :route="{ path: '/bookmarks' }">ブックマーク</el-menu-item>
           <el-submenu index="3" v-if="isLoggedIn()" class="right-menu">
             <template slot="title"
               ><img class="avatar" :src="user.avatar_url"
             /></template>
-            <el-menu-item index="3-1" :route="{ path: '/' }"
-              >ログアウト</el-menu-item
-            >
+            <el-menu-item index="3-1" :route="{ path: '/' }">ログアウト</el-menu-item>
           </el-submenu>
-          <el-menu-item
-            index="4"
-            v-if="!isLoggedIn()"
-            class="right-menu"
-            :route="{ path: '/' }"
-            >ログイン</el-menu-item
-          >
+          <el-menu-item index="4" v-if="!isLoggedIn()" class="right-menu" :route="{ path: '/auth/login' }">ログイン</el-menu-item>
         </el-menu>
       </el-header>
       <el-main>
@@ -42,7 +30,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex'
 
 export default {
   computed: {
@@ -52,30 +40,30 @@ export default {
     })
   },
   created() {
-    this.$store.dispatch("GlobalHeader/fetchUser");
+    this.$store.dispatch('GlobalHeader/fetchUser')
   },
   methods: {
     isLoggedIn() {
-      return this.user !== null;
+      return this.user !== null
     },
     handleSelect(key, keyPath) {
       switch (key) {
-        case "3-1":
+        case '3-1':
           // ログアウトにはCSRFTokenが必要になる
-          let csrf = this.$cookie.get("csrftoken");
-          return this.$store.dispatch("GlobalHeader/logout", csrf).then(res => {
+          let csrf = this.$cookie.get('csrftoken')
+          return this.$store.dispatch('GlobalHeader/logout', csrf).then(res => {
             this.$message({
-              message: "ログアウトしました",
-              type: "success"
-            });
-            this.$store.dispatch("GlobalHeader/changeActiveIndex", "1");
-          });
-        case "4":
-          return (window.location.href = "/accounts/login");
+              message: 'ログアウトしました',
+              type: 'success'
+            })
+            this.$store.dispatch('GlobalHeader/changeActiveIndex', '1')
+          })
+        case '4':
+          return this.$router.push('/auth/login')
       }
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -108,7 +96,7 @@ export default {
 
 <style lang="scss">
 html {
-  font-family: "Rounded Mplus 1c";
+  font-family: 'Rounded Mplus 1c';
 }
 
 @media screen and (min-width: 768px) {
@@ -132,7 +120,7 @@ html {
 .clearfix:before,
 .clearfix:after {
   display: table;
-  content: "";
+  content: '';
 }
 
 .clearfix:after {

@@ -19,9 +19,9 @@ defmodule MasudaStreamWeb.Router do
     get "/", PageController, :index
     get "/entries/:id", PageController, :index
     get "/bookmarks", PageController, :index
+    get "/auth/login", PageController, :index
 
     get "/auth/:provider", AuthController, :new
-    get "/auth/login", AuthController, :new
     get "/auth/:provider/callback", AuthController, :callback
     post "/auth/:provider/callback", AuthController, :callback
   end
