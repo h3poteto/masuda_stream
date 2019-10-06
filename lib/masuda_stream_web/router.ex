@@ -23,7 +23,9 @@ defmodule MasudaStreamWeb.Router do
 
     scope "/masuda", Masuda, as: :masuda do
       pipe_through :api
-      resources "/entries", EntriesController, only: [:index, :show]
+      resources "/entries", EntriesController, only: [:index, :show] do
+        get "/bookmarks", Entries.BookmarksController, :index
+      end
     end
   end
 end
