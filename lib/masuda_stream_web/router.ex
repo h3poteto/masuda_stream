@@ -17,6 +17,8 @@ defmodule MasudaStreamWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/entries/:id", PageController, :index
+    get "/bookmarks", PageController, :index
   end
 
   scope "/api", MasudaStreamWeb do
