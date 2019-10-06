@@ -1,8 +1,11 @@
 <template>
-<div class="side-menu">
-  <p><a href="/about">MasudaStreamについて</a></p>
-  <p>&copy; 2018 <a href="https://twitter.com/h3_poteto" target="_blank">@h3_poteto</a></p>
-</div>
+  <div class="side-menu">
+    <p><a href="/about">MasudaStreamについて</a></p>
+    <p>
+      &copy; 2019
+      <a href="https://twitter.com/h3_poteto" target="_blank">@h3_poteto</a>
+    </p>
+  </div>
 </template>
 
 <script>
