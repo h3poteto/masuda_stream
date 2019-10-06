@@ -29,4 +29,10 @@ defmodule MasudaStreamWeb.Masuda.EntriesController do
     )
     render(conn, "index.json", entries: entries)
   end
+
+  def show(conn, %{"id" => id}) do
+    entry = Repo.get(MasudaStream.Hatena.Entry, id)
+    |> Repo.preload([:anond, :entry_detail])
+    render(conn, "show.json", entry: entry)
+  end
 end
