@@ -51,7 +51,8 @@ defmodule MasudaStream.MixProject do
       {:json, "~> 1.2"},
       # To parse RSS 1.0
       {:quinn, "~> 1.1"},
-      {:timex, "~> 3.5"}
+      {:timex, "~> 3.5"},
+      {:credo, "~> 1.1.0", only: [:dev, :test], runtime: false}
     ]
   end
 
