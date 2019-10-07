@@ -2,7 +2,7 @@ version: '3'
 
 services:
   elixir:
-    image: h3poteto/elixir-rust-node:1.9.1-rust1.38-node10-slim-stretch
+    image: h3poteto/elixir-rust-node:1.8.2-rust1.38-node10-slim-stretch
     environment:
       HATENA_CONSUMER_KEY: $HATENA_CONSUMER_KEY
       HATENA_CONSUMER_SECRET: $HATENA_CONSUMER_SECRET
