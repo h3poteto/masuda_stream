@@ -1,4 +1,5 @@
 defmodule Ueberauth.Strategy.Hatena.OAuth do
+  @moduledoc false
 
   @request_token_url "https://www.hatena.com/oauth/initiate"
   @access_token_url "https://www.hatena.com/oauth/token"
@@ -52,7 +53,7 @@ defmodule Ueberauth.Strategy.Hatena.OAuth do
       |> OAuther.sign(@access_token_url, [{"oauth_verifier", verifier}], creds)
       |> OAuther.header
 
-    HTTPoison.post(@access_token_url,[], [header])
+    HTTPoison.post(@access_token_url, [], [header])
     |> decode_response
   end
 

@@ -1,4 +1,6 @@
 defmodule Ueberauth.Strategy.Hatena.Client do
+  @moduledoc false
+
   alias Ueberauth.Strategy.Hatena.OAuth
 
   def get(url, access_token, access_token_secret), do: get(url, [], access_token, access_token_secret)

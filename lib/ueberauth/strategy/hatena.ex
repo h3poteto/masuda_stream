@@ -1,9 +1,11 @@
 defmodule Ueberauth.Strategy.Hatena do
+  @moduledoc false
+
   use Ueberauth.Strategy, uid_field: :url_name
 
-  alias Ueberauth.Auth.Info
   alias Ueberauth.Auth.Credentials
   alias Ueberauth.Auth.Extra
+  alias Ueberauth.Auth.Info
   alias Ueberauth.Strategy.Hatena
 
   def handle_request!(conn) do
@@ -88,7 +90,6 @@ defmodule Ueberauth.Strategy.Hatena do
         set_errors!(conn, [error("token", error["message"])])
     end
   end
-
 
   defp option(conn, key) do
     default = Keyword.get(default_options(), key)
