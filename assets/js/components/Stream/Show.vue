@@ -118,7 +118,7 @@ export default {
       return this.$store.state.GlobalHeader.user !== null
     },
     goToLoginPage() {
-      window.location.href = '/accounts/login'
+      window.location.href = '/auth/hatena'
     },
     submitBookmark() {
       this.$refs['bookmarkForm'].validate(valid => {

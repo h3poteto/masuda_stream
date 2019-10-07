@@ -11,6 +11,9 @@ defmodule MasudaStreamWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
+    plug :fetch_flash
+    plug :put_secure_browser_headers
   end
 
   scope "/", MasudaStreamWeb do
@@ -19,15 +22,22 @@ defmodule MasudaStreamWeb.Router do
     get "/", PageController, :index
     get "/entries/:id", PageController, :index
     get "/bookmarks", PageController, :index
+    get "/auth/login", PageController, :index
+
+    get "/auth/:provider", AuthController, :new
+    get "/auth/:provider/callback", AuthController, :callback
+    post "/auth/:provider/callback", AuthController, :callback
   end
 
   scope "/api", MasudaStreamWeb do
+    pipe_through :api
 
     scope "/masuda", Masuda, as: :masuda do
-      pipe_through :api
       resources "/entries", EntriesController, only: [:index, :show] do
         get "/bookmarks", Entries.BookmarksController, :index
       end
     end
+
+    get "/user/my", UserController, :index
   end
 end

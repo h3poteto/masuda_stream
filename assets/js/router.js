@@ -4,6 +4,7 @@ import GlobalHeader from './components/GlobalHeader.vue'
 import StreamIndex from './components/Stream/Index.vue'
 import StreamShow from './components/Stream/Show.vue'
 import BookmarksIndex from './components/Bookmarks/Index.vue'
+import Login from './components/Login.vue'
 
 Vue.use(VueRouter)
 
@@ -18,23 +19,25 @@ const routes = [
         children: [
           {
             path: 'entries/:id',
-            component: StreamShow,
+            component: StreamShow
           }
-        ],
+        ]
       },
       {
         path: 'bookmarks',
-        component: BookmarksIndex,
+        component: BookmarksIndex
       },
-    ],
-  },
+      {
+        path: 'auth/login',
+        component: Login
+      }
+    ]
+  }
 ]
 
 const router = new VueRouter({
   mode: 'history',
-  routes: routes,
+  routes: routes
 })
 
-
 export default router
-

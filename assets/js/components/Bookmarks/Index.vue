@@ -3,27 +3,17 @@
     <el-row :gutter="20">
       <el-col :span="18">
         <div class="gird-content not-login" v-if="!isLoggedIn()">
-          <el-button type="primary" @click="login"
-            >ログインしてブックマークを確認</el-button
-          >
+          <el-button type="primary" @click="login">ログインしてブックマークを確認</el-button>
         </div>
         <div class="grid-content feed" v-if="isLoggedIn()">
-          <el-card
-            class="box-card bookmark-card"
-            v-for="bookmark in bookmarks"
-            v-bind:key="bookmark.id"
-          >
+          <el-card class="box-card bookmark-card" v-for="bookmark in bookmarks" v-bind:key="bookmark.id">
             <div class="title">
               <h4>
-                <a :href="bookmark.link[0]['@href']" target="_blank">{{
-                  bookmark.title
-                }}</a>
+                <a :href="bookmark.link[0]['@href']" target="_blank">{{ bookmark.title }}</a>
               </h4>
             </div>
             <div class="link">
-              <a :href="bookmark.link[0]['@href']" target="_blank">{{
-                bookmark.link[0]["@href"]
-              }}</a>
+              <a :href="bookmark.link[0]['@href']" target="_blank">{{ bookmark.link[0]['@href'] }}</a>
             </div>
             <div class="bookmark">
               <div class="icon"><img :src="user.avatar_url" /></div>
@@ -42,7 +32,7 @@
       <el-col :span="6">
         <div class="grid-content">
           <el-card class="box-card">
-            <sidemenu></sidemenu>
+            <Sidemenu></Sidemenu>
           </el-card>
         </div>
       </el-col>
@@ -51,12 +41,12 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import moment from "moment";
-import Vue from "vue";
-import Sidemenu from "@/components/Sidemenu";
+import { mapState } from 'vuex'
+import moment from 'moment'
+import Sidemenu from '@/components/Sidemenu'
 
 export default {
+  components: { Sidemenu },
   computed: {
     ...mapState({
       user: state => state.GlobalHeader.user,
@@ -64,24 +54,22 @@ export default {
     })
   },
   created() {
-    this.$store.dispatch("GlobalHeader/changeActiveIndex", "2");
-    this.$store.dispatch("Bookmarks/Index/fetchBookmarks");
+    this.$store.dispatch('GlobalHeader/changeActiveIndex', '2')
+    this.$store.dispatch('Bookmarks/Index/fetchBookmarks')
   },
   methods: {
     isLoggedIn() {
-      return this.user !== null;
+      return this.user !== null
     },
     login() {
-      return (window.location.href = "/accounts/login");
+      window.location.href = '/auth/hatena'
     },
     fixDatetime(datetime) {
       // YYYY-MM-DDTHH:mm:ssをYYYY-MM-DD HH:mmにしたい
-      return moment(datetime).format("YYYY-MM-DD HH:mm");
+      return moment(datetime).format('YYYY-MM-DD HH:mm')
     }
   }
-};
-
-Vue.component("sidemenu", Sidemenu);
+}
 </script>
 
 <style lang="scss" scoped>

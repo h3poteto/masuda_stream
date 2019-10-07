@@ -1,6 +1,5 @@
 credo:
   enabled: true
-  version: 1.1.0
   config_file: .credo.exs
 eslint:
   enabled: true
