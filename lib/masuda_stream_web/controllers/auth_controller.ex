@@ -15,7 +15,7 @@ defmodule MasudaStreamWeb.AuthController do
 
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     conn
-    |> put_private(:hatena_session, auth)
+    |> put_session(:current_user_auth, auth)
     |> redirect(to: MasudaStreamWeb.Router.Helpers.page_path(conn, :index))
   end
 end
