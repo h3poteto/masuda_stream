@@ -41,6 +41,7 @@ defmodule MasudaStreamWeb.Router do
     scope "/user" do
       get "/my", UserController, :index
       get "/bookmark", User.BookmarksController, :show
+      post "/bookmark", User.BookmarksController, :create
     end
   end
 end
