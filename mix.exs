@@ -56,7 +56,8 @@ defmodule MasudaStream.MixProject do
       {:timex, "~> 3.5"},
       {:credo, "~> 1.1.0", only: [:dev, :test], runtime: false},
       {:ueberauth_hatena, "~> 0.1.0"},
-      {:oauther, "~> 1.1"}
+      {:oauther, "~> 1.1"},
+      {:poison, "~> 4.0"}
     ]
   end
 
