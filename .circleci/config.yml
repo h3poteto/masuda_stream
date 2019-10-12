@@ -52,7 +52,6 @@ workflows:
           filters:
             branches:
               only:
-                - iss-24
                 - master
           requires:
             - build
