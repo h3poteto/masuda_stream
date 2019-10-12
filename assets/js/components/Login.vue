@@ -21,6 +21,7 @@
 import Sidemenu from '@/components/Sidemenu'
 
 export default {
+  name: 'login',
   components: { Sidemenu },
   methods: {
     login() {

@@ -63,6 +63,7 @@ import { mapState } from 'vuex'
 import moment from 'moment'
 
 export default {
+  name: 'stream-show',
   data() {
     return {
       bookmarkForm: {

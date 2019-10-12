@@ -46,6 +46,7 @@ import Vue from 'vue'
 import Sidemenu from '../Sidemenu'
 
 export default {
+  name: 'stream-index',
   computed: {
     ...mapState({
       entries: state => state.Stream.Index.entries,
