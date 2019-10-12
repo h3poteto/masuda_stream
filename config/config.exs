@@ -37,6 +37,12 @@ config :ueberauth, Ueberauth.Strategy.Hatena.OAuth,
   consumer_secret: System.get_env("HATENA_CONSUMER_SECRET"),
   scope: "read_public,write_public"
 
+config :masuda_stream, MasudaStream.Scheduler,
+  jobs: [
+    # Every 15 minutes
+    {"*/15 * * * *", {MasudaStream.Tasks.RSS, :get, []}}
+  ]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
