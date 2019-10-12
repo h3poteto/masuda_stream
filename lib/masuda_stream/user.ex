@@ -1,4 +1,6 @@
 defmodule MasudaStream.User do
+  @moduledoc false
+
   use Ecto.Schema
   import Ecto.Changeset
   @timestamps_opts [type: :utc_datetime]
