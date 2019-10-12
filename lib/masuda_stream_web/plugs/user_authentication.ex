@@ -12,7 +12,8 @@ defmodule MasudaStreamWeb.Plugs.UserAuthentication do
       nil ->
         conn
         |> put_status(401)
-        |> render(MasudaStreamWeb.ErrorView, "error.json", %{status: 401, message: "Unauthorized"})
+        |> put_view(MasudaStreamWeb.ErrorView)
+        |> render("error.json", %{status: 401, message: "Unauthorized"})
         |> halt
 
       user ->

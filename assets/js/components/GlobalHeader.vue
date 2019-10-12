@@ -12,7 +12,6 @@
         >
           <span class="title-logo">MasudaStream</span>
           <el-menu-item index="1" :route="{ path: '/' }">エントリー</el-menu-item>
-          <el-menu-item index="2" :route="{ path: '/bookmarks' }">ブックマーク</el-menu-item>
           <el-submenu index="3" v-if="isLoggedIn()" class="right-menu">
             <template slot="title"
               ><img class="avatar" :src="user.avatar_url"
