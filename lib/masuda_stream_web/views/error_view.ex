@@ -1,6 +1,10 @@
 defmodule MasudaStreamWeb.ErrorView do
   use MasudaStreamWeb, :view
 
+  def render("error.json", %{status: status, message: message}) do
+    %{status: status, message: message}
+  end
+
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.
   # def render("500.html", _assigns) do
