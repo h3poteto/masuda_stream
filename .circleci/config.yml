@@ -1,0 +1,57 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: h3poteto/elixir-rust-node:1.8.2-rust1.38-node10-slim-stretch
+    working_directory: /var/opt/app
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - deps-{{ arch }}-elixir1.8.2-{{ checksum "mix.exs" }}-{{ checksum "mix.lock" }}
+            - deps-{{ arch }}-elixir1.8.2-{{ checksum "mix.exs" }}
+      - run:
+          name: Install dependencies
+          command: |
+            mix local.hex --force
+            mix deps.get
+      - save_cache:
+          key: deps-{{ arch }}-elixir1.8.2-{{ checksum "mix.exs" }}-{{ checksum "mix.lock" }}
+          paths:
+            - /var/opt/app/deps
+            - /var/opt/app/_build
+      - run:
+          name: Compile
+          command: |
+            mix local.rebar --force
+            mix deps.compile
+            mix compile
+
+  create_image:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Docker build
+          command: |
+            docker build -t $ECR:$CIRCLE_SHA1 -t $ECR:latest .
+      - run:
+          name: Docker push
+          command: |
+            $(aws ecr get-login --no-include-email --region ap-northeast-1)
+            docker push $ECR:latest
+            docker push $ECR:$CIRCLE_SHA1
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build
+      - create_image:
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - build

@@ -4,17 +4,13 @@
 # remember to add this file to your .gitignore.
 use Mix.Config
 
-database_url =
-  System.get_env("DATABASE_URL") ||
-    raise """
-    environment variable DATABASE_URL is missing.
-    For example: ecto://USER:PASS@HOST/DATABASE
-    """
-
 config :masuda_stream, MasudaStream.Repo,
-  # ssl: true,
-  url: database_url,
-  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
+  username: System.get_env("DB_USERNAME") || "postgres",
+  password: System.get_env("DB_PASSWORD") || "",
+  database: System.get_env("DB_NAME") || "masuda_stream",
+  hostname: System.get_env("DB_HOSTNAME") || "postgres",
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10
 
 secret_key_base =
   System.get_env("SECRET_KEY_BASE") ||
