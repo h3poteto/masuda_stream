@@ -45,12 +45,14 @@ jobs:
 
 workflows:
   version: 2
-  jobs:
-    - build
-    - create_image:
-        filters:
-          branches:
-            only:
-              - master
-        requires:
-          - build
+  build_and_deploy:
+    jobs:
+      - build
+      - create_image:
+          filters:
+            branches:
+              only:
+                - iss-24
+                - master
+          requires:
+            - build
