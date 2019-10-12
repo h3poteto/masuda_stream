@@ -6,4 +6,10 @@ defmodule MasudaStreamWeb.UserController do
     conn
     |> render("index.json", user: user)
   end
+
+  def delete(conn, _params) do
+    conn
+    |> configure_session(drop: true)
+    |> send_resp(:no_content, "")
+  end
 end

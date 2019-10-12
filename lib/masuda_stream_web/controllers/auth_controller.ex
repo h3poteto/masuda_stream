@@ -1,8 +1,9 @@
 defmodule MasudaStreamWeb.AuthController do
+  @moduledoc false
   use MasudaStreamWeb, :controller
   alias Ueberauth.Strategy.Helpers
-  alias MasudaStream.User
   alias MasudaStream.Repo
+  alias MasudaStream.User
   plug Ueberauth
 
   def new(conn, _params) do

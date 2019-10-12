@@ -1,8 +1,9 @@
 defmodule MasudaStreamWeb.Plugs.UserAuthentication do
+  @moduledoc false
   import Plug.Conn
   import Phoenix.Controller
-  alias MasudaStream.User
   alias MasudaStream.Repo
+  alias MasudaStream.User
 
   def init(default), do: default
 
