@@ -74,3 +74,9 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+config :masuda_stream, MasudaStream.Scheduler,
+  jobs: [
+    # Every 15 minutes
+    {"*/15 * * * *", {MasudaStream.Tasks.RSS, :get, []}}
+  ]

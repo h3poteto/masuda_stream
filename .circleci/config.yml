@@ -16,17 +16,17 @@ jobs:
           command: |
             mix local.hex --force
             mix deps.get
-      - save_cache:
-          key: deps-{{ arch }}-elixir1.8.2-{{ checksum "mix.exs" }}-{{ checksum "mix.lock" }}
-          paths:
-            - /var/opt/app/deps
-            - /var/opt/app/_build
       - run:
           name: Compile
           command: |
             mix local.rebar --force
             mix deps.compile
             mix compile
+      - save_cache:
+          key: deps-{{ arch }}-elixir1.8.2-{{ checksum "mix.exs" }}-{{ checksum "mix.lock" }}
+          paths:
+            - /var/opt/app/deps
+            - /var/opt/app/_build
 
   create_image:
     machine: true
