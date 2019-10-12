@@ -16,6 +16,12 @@ config :masuda_stream, MasudaStreamWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :masuda_stream, MasudaStream.Scheduler,
+  jobs: [
+    # Every 15 minutes
+    {"*/15 * * * *", {MasudaStream.Tasks.RSS, :get, []}}
+  ]
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

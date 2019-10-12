@@ -1,18 +1,18 @@
 defmodule MasudaStream.Tasks.RSS do
   use Timex
   require Logger
+  alias MasudaStream.Hatena.Entry
   alias MasudaStream.Repo
 
-
   @hatena_domain "https://b.hatena.ne.jp"
-  @anond_url  "https://anond.hatelabo.jp/"
+  @anond_url "https://anond.hatelabo.jp/"
 
   def get() do
     fetch()
-    |> Enum.map(fn(item) ->
+    |> Enum.map(fn item ->
       item |> parse()
     end)
-    |> Enum.map(fn(item) ->
+    |> Enum.map(fn item ->
       item |> save_entry()
     end)
     |> get_anonds()
@@ -23,6 +23,7 @@ defmodule MasudaStream.Tasks.RSS do
     rss_url = "#{@hatena_domain}/entrylist?mode=rss&url=#{@anond_url}&sort=recent"
     Logger.info("Fetching #{rss_url} ...")
     {:ok, %HTTPoison.Response{body: body}} = HTTPoison.get(rss_url)
+
     body
     |> Quinn.parse()
     |> Quinn.find(:item)
@@ -52,7 +53,9 @@ defmodule MasudaStream.Tasks.RSS do
   end
 
   defp parse_content(item) do
-    [%{attr: _, name: :"content:encoded", value: [content]}] = item |> Quinn.find(:"content:encoded")
+    [%{attr: _, name: :"content:encoded", value: [content]}] =
+      item |> Quinn.find(:"content:encoded")
+
     content
   end
 
@@ -62,49 +65,66 @@ defmodule MasudaStream.Tasks.RSS do
   end
 
   defp parse_hatena_bookmarkcount(item) do
-    [%{attr: _, name: :"hatena:bookmarkcount", value: [hatena_bookmarkcount]}] = item |> Quinn.find(:"hatena:bookmarkcount")
+    [%{attr: _, name: :"hatena:bookmarkcount", value: [hatena_bookmarkcount]}] =
+      item |> Quinn.find(:"hatena:bookmarkcount")
+
     hatena_bookmarkcount |> String.to_integer(10)
   end
 
   defp parse_posted_at(item) do
     # Timezone in RSS is UTC. The format is "2019-10-05T13:46:58Z".
     [%{attr: _, name: :"dc:date", value: [posted_at]}] = item |> Quinn.find(:"dc:date")
+
     posted_at
     |> Timex.parse!("{ISO:Extended:Z}")
   end
 
-  defp save_entry(%{title: title, summary: summary, link: link, content: content, hatena_bookmarkcount: hatena_bookmarkcount, posted_at: posted_at}) do
-    case Repo.get_by(MasudaStream.Hatena.Entry, link: link) do
-      nil -> %MasudaStream.Hatena.Entry{link: link}
+  defp save_entry(%{
+         title: title,
+         summary: summary,
+         link: link,
+         content: content,
+         hatena_bookmarkcount: hatena_bookmarkcount,
+         posted_at: posted_at
+       }) do
+    case Repo.get_by(Entry, link: link) do
+      nil -> %Entry{link: link}
       entry -> entry
     end
-    |> MasudaStream.Hatena.Entry.changeset(
-      %{
-        "title" => title,
-        "summary" => summary,
-        "content" => content,
-        "link" => link,
-        "hatena_bookmarkcount" => hatena_bookmarkcount,
-        "posted_at" => posted_at
-      }
-    )
+    |> Entry.changeset(%{
+      "title" => title,
+      "summary" => summary,
+      "content" => content,
+      "link" => link,
+      "hatena_bookmarkcount" => hatena_bookmarkcount,
+      "posted_at" => posted_at
+    })
     |> Repo.insert_or_update!()
   end
 
   def get_anonds(entries) do
     {:ok, pid} = Task.Supervisor.start_link()
+
     entries
-    |> Enum.map(fn(entry) ->
-      Task.Supervisor.start_child(pid, MasudaStream.Tasks.Anond, :get, [entry])
+    |> Enum.map(fn entry ->
+      Task.Supervisor.async_nolink(pid, MasudaStream.Tasks.Anond, :get, [entry])
     end)
+    |> Enum.map(fn task ->
+      Task.await(task, 10_000)
+    end)
+
     entries
   end
 
   def get_bookmarks(entries) do
     {:ok, pid} = Task.Supervisor.start_link()
+
     entries
-    |> Enum.map(fn(entry) ->
-      Task.Supervisor.start_child(pid, MasudaStream.Tasks.Bookmark, :get, [entry])
+    |> Enum.map(fn entry ->
+      Task.Supervisor.async_nolink(pid, MasudaStream.Tasks.Bookmark, :get, [entry])
+    end)
+    |> Enum.map(fn task ->
+      Task.await(task, 10_000)
     end)
   end
 end
