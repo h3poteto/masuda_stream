@@ -11,9 +11,10 @@ defmodule MasudaStream.Application do
       # Start the Ecto repository
       MasudaStream.Repo,
       # Start the endpoint when the application starts
-      MasudaStreamWeb.Endpoint
+      MasudaStreamWeb.Endpoint,
       # Starts a worker by calling: MasudaStream.Worker.start_link(arg)
       # {MasudaStream.Worker, arg},
+      MasudaStream.Scheduler
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
