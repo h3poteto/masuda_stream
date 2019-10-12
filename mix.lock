@@ -14,6 +14,7 @@
   "elixir_feed_parser": {:hex, :elixir_feed_parser, "0.0.1", "20bfddc342c401429b3910acbfd9f075037d204b6d82a467292d7fce55c8e76b", [:mix], [], "hexpm"},
   "ex_abnf": {:hex, :ex_abnf, "0.2.8", "e562fd68612d39b97e6fce1f28c903d2dbc803c2923ef4746108500bb0507aee", [:mix], [], "hexpm"},
   "ex_rfc3986": {:hex, :ex_rfc3986, "0.2.8", "cbe628db68bb3d4fa94987a85bad2ad9475a9e90d2b8abe8575ccf1d191b7086", [:mix], [{:ex_abnf, "~> 0.2.8", [hex: :ex_abnf, repo: "hexpm", optional: false]}], "hexpm"},
+  "ex_slack_logger": {:hex, :ex_slack_logger, "0.1.1", "7eb1bd7b92fd23165ea60b924fc5557aa3bbfb0d58196b7001879b0a5ae434cb", [:mix], [{:httpoison, "~> 1.6", [hex: :httpoison, repo: "hexpm", optional: false]}, {:poison, "~> 4.0", [hex: :poison, repo: "hexpm", optional: false]}, {:timex, "~> 3.5", [hex: :timex, repo: "hexpm", optional: false]}], "hexpm"},
   "exjson": {:hex, :exjson, "0.6.0", "6aa374ff30e5626d3d6ed18b1b829f8ffa40a7345a353f3e1e769f9917f5a704", [:mix], [], "hexpm"},
   "feeder": {:hex, :feeder, "2.3.2", "18792e18ae2928885e1859ecfbac6fc7a2ec6e99efa51828160e530b2a188c8b", [:make], [], "hexpm"},
   "feeder_ex": {:hex, :feeder_ex, "1.1.0", "0be3732255cdb45dec949e0ede6852b5261c9ff173360e8274a6ac65183b2b55", [:mix], [{:feeder, "~> 2.2", [hex: :feeder, repo: "hexpm", optional: false]}], "hexpm"},

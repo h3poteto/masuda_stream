@@ -15,6 +15,13 @@ config :masuda_stream, MasudaStreamWeb.Endpoint,
 
 # Do not print debug messages in production
 config :logger, level: :info
+config :logger, backends: [:console, ExSlackLogger]
+
+config :logger, ExSlackLogger,
+  level: :error,
+  hook_url: {:system, "SLACK_WEBHOOK_URL"},
+  channel: "#masuda_stream",
+  username: "masuda_stream"
 
 config :masuda_stream, MasudaStream.Scheduler,
   jobs: [
