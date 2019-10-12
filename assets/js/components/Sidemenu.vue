@@ -10,6 +10,7 @@
 
 <script>
 export default {
+  name: 'sidemenu',
   data() {
     return {}
   }
