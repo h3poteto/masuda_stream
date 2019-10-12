@@ -1,9 +1,9 @@
 defmodule MasudaStreamWeb.UserController do
   use MasudaStreamWeb, :controller
+  plug MasudaStreamWeb.Plugs.UserAuthentication
 
-  def index(conn, _params) do
-    auth = get_session(conn, :current_user_auth)
+  def index(%Plug.Conn{assigns: %{current_user: user}} = conn, _params) do
     conn
-    |> render("index.json", auth: auth)
+    |> render("index.json", user: user)
   end
 end
