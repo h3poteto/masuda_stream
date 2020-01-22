@@ -23,10 +23,10 @@ config :logger, ExSlackLogger,
   channel: "#masuda_stream",
   username: "masuda_stream"
 
-# DB負荷が高いように見えるので実行頻度を1日1回に絞る
 config :masuda_stream, MasudaStream.Scheduler,
   jobs: [
-    {"15 18 * * *", {MasudaStream.Tasks.RSS, :get, []}}
+    # Every 15 minutes
+    {"*/15 * * * *", {MasudaStream.Tasks.RSS, :get, []}}
   ]
 
 # ## SSL Support
