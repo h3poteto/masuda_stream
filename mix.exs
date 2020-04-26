@@ -44,7 +44,7 @@ defmodule MasudaStream.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:httpoison, "~> 1.6"},
-      {:ex_rfc3986, "~> 0.2.7"},
+      {:ex_rfc3986, "~> 0.3.0"},
       {:floki, "~> 0.23.0"},
       # We can not update elixir 1.9.1, because html5ever does not support OTP22.
       # So I'm waiting for this pull request: https://github.com/hansihe/html5ever_elixir/pull/14
