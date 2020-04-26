@@ -59,7 +59,8 @@ defmodule MasudaStream.MixProject do
       {:oauther, "~> 1.1"},
       {:poison, "~> 4.0"},
       {:quantum, "~> 2.3"},
-      {:ex_slack_logger, "~> 0.1.0"}
+      {:ex_slack_logger, "~> 0.1.0"},
+      {:rollbax, "~> 0.11"}
     ]
   end
 

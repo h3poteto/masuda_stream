@@ -5,6 +5,14 @@ defmodule MasudaStreamWeb.ErrorView do
     %{status: status, message: message}
   end
 
+  def render("404.html", _assigns) do
+    "Page not found"
+  end
+
+  def render("500.html", _assigns) do
+    "Internal server error"
+  end
+
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.
   # def render("500.html", _assigns) do
