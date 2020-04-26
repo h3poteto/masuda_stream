@@ -6,6 +6,6 @@ defmodule Mix.Tasks.Rss do
   @shortdoc "Get recently hatena bookmark entries"
   def run(_) do
     {:ok, _} = Application.ensure_all_started(:masuda_stream)
-    RSS.get()
+    RSS.fetch()
   end
 end

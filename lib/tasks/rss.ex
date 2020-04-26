@@ -7,19 +7,19 @@ defmodule MasudaStream.Tasks.RSS do
   @hatena_domain "https://b.hatena.ne.jp"
   @anond_url "https://anond.hatelabo.jp/"
 
-  def get() do
-    fetch()
+  def fetch() do
+    get()
     |> Enum.map(fn item ->
       item |> parse()
     end)
     |> Enum.map(fn item ->
       item |> save_entry()
     end)
-    |> get_anonds()
-    |> get_bookmarks()
+    |> fetch_anonds()
+    |> fetch_bookmarks()
   end
 
-  def fetch() do
+  def get() do
     rss_url = "#{@hatena_domain}/entrylist?mode=rss&url=#{@anond_url}&sort=recent"
     Logger.info("Fetching #{rss_url} ...")
     {:ok, %HTTPoison.Response{body: body}} = HTTPoison.get(rss_url)
@@ -102,29 +102,30 @@ defmodule MasudaStream.Tasks.RSS do
     |> Repo.insert_or_update!()
   end
 
-  def get_anonds(entries) do
+  def fetch_anonds(entries) do
     {:ok, pid} = Task.Supervisor.start_link()
 
-    entries
-    |> Enum.map(fn entry ->
-      Task.Supervisor.async_nolink(pid, MasudaStream.Tasks.Anond, :get, [entry])
-    end)
-    |> Enum.map(fn task ->
-      Task.await(task, 10_000)
-    end)
+    _ =
+      entries
+      |> Enum.map(fn entry ->
+        Task.Supervisor.async_nolink(pid, MasudaStream.Tasks.Anond, :fetch, [entry])
+      end)
+      |> Enum.map(fn task ->
+        Task.await(task, 60_000)
+      end)
 
     entries
   end
 
-  def get_bookmarks(entries) do
+  def fetch_bookmarks(entries) do
     {:ok, pid} = Task.Supervisor.start_link()
 
     entries
     |> Enum.map(fn entry ->
-      Task.Supervisor.async_nolink(pid, MasudaStream.Tasks.Bookmark, :get, [entry])
+      Task.Supervisor.async_nolink(pid, MasudaStream.Tasks.Bookmark, :fetch, [entry])
     end)
     |> Enum.map(fn task ->
-      Task.await(task, 10_000)
+      Task.await(task, 60_000)
     end)
   end
 end

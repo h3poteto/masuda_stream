@@ -20,6 +20,8 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_DB: masuda_stream
+    ports:
+      - "5432:5432"
     volumes:
       - storage:/var/lib/postgres/data
 

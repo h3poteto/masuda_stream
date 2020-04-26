@@ -4,17 +4,39 @@ defmodule MasudaStream.Tasks.Anond do
 
   @keyword_host "https://anond.hatelabo.jp"
 
-  def get(%MasudaStream.Hatena.Entry{} = entry) do
-    fetch(entry.link)
-    |> save_anond(entry)
+  def fetch(%MasudaStream.Hatena.Entry{} = entry) do
+    get(entry.link)
+    |> case do
+      {:error} ->
+        {:error}
+
+      html ->
+        html
+        |> save_anond(entry)
+    end
   end
 
-  def fetch(url) do
+  def get(url) do
     Logger.info("Fetching anond: #{url}")
-    {:ok, %HTTPoison.Response{body: body}} = HTTPoison.get(url)
 
-    body
-    |> parse
+    url
+    |> HTTPoison.get()
+    |> case do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        body |> parse()
+
+      {:ok, %HTTPoison.Response{status_code: 404}} ->
+        Logger.warn("#{url} returns 404")
+        {:error}
+
+      {:ok, %HTTPoison.Response{status_code: status}} ->
+        Logger.error("#{url} returns #{status}")
+        {:error}
+
+      {:error, %HTTPoison.Error{reason: reason}} ->
+        Logger.error("fetch failed #{url}, #{reason}")
+        {:error}
+    end
   end
 
   defp parse(body) do
@@ -23,7 +45,8 @@ defmodule MasudaStream.Tasks.Anond do
     |> Enum.map(fn element -> children(element) end)
     |> Enum.flat_map(fn element -> element end)
     |> Enum.chunk_by(fn element ->
-      title_ad?(element) || rectangle?(element) || share_button?(element)
+      title_ad?(element) || rectangle?(element) || section_footer?(element) ||
+        share_button?(element)
     end)
     |> only_body()
     |> replace_keyword_link()
@@ -63,10 +86,20 @@ defmodule MasudaStream.Tasks.Anond do
     |> Enum.any?(fn id -> id == "rectangle-middle" end)
   end
 
+  defp section_footer?(element) do
+    element
+    |> Floki.attribute("class")
+    |> Enum.any?(fn class -> class == "sectionfooter" end)
+  end
+
   defp share_button?(element) do
     element
     |> Floki.attribute("class")
     |> Enum.any?(fn class -> class == "share-button" end)
+  end
+
+  defp only_body([_, _start, body, _end]) do
+    body
   end
 
   defp only_body([_, _start, body, _end, _]) do
