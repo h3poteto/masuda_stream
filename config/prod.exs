@@ -26,7 +26,7 @@ config :logger, ExSlackLogger,
 config :masuda_stream, MasudaStream.Scheduler,
   jobs: [
     # Every 15 minutes
-    {"*/15 * * * *", {MasudaStream.Tasks.RSS, :get, []}}
+    {"*/15 * * * *", {MasudaStream.Tasks.RSS, :fetch, []}}
   ]
 
 # ## SSL Support
