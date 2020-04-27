@@ -21,5 +21,6 @@ defmodule MasudaStream.Hatena.Entry do
     entry
     |> cast(attrs, [:title, :summary, :content, :link, :hatena_bookmarkcount, :posted_at])
     |> validate_required([:title, :link, :hatena_bookmarkcount, :posted_at])
+    |> unique_constraint(:link)
   end
 end
