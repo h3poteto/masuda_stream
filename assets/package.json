@@ -14,7 +14,7 @@
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",
     "vue": "^2.6.11",
-    "vue-awesome": "^3.5.4",
+    "vue-awesome": "^4.0.2",
     "vue-cookie": "^1.1.4",
     "vue-router": "^3.1.6",
     "vuex": "^3.1.1"
