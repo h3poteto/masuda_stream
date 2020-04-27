@@ -11,17 +11,13 @@ use Mix.Config
 # before starting your production server.
 config :masuda_stream, MasudaStreamWeb.Endpoint,
   url: [host: "masuda.stream", port: 80],
+  debug_errors: false,
+  catch_error: true,
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
 config :logger, level: :info
-config :logger, backends: [:console, ExSlackLogger]
-
-config :logger, ExSlackLogger,
-  level: :error,
-  hook_url: {:system, "SLACK_WEBHOOK_URL"},
-  channel: "#masuda_stream",
-  username: "masuda_stream"
+config :logger, backends: [:console]
 
 config :masuda_stream, MasudaStream.Scheduler,
   jobs: [
