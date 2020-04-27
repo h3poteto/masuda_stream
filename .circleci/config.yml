@@ -30,12 +30,14 @@ jobs:
 
   create_image:
     machine: true
+    environment:
+      DUMMY_SECRET_KEY_BASE: fkHPVsK4U1cDwFTriHvqlLejSzJNcWWsfT3vePQkhj+WD1UasLSdJ1hF3KlAmAZs
     steps:
       - checkout
       - run:
           name: Docker build
           command: |
-            docker build -t $ECR:$CIRCLE_SHA1 -t $ECR:latest .
+            docker build --build-arg SECRET_KEY_BASE=$DUMMY_SECRET_KEY_BASE -t $ECR:$CIRCLE_SHA1 -t $ECR:latest .
       - run:
           name: Docker push
           command: |
