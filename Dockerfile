@@ -10,7 +10,7 @@ RUN set -ex && \
     rm -rf node_modules
 
 
-FROM h3poteto/elixir-rust:1.8.2-rust1.38-slim-stretch
+FROM ghcr.io/h3poteto/elixir-rust-node:1.10.4-rust1.42-node12-slim-buster
 
 USER root
 
