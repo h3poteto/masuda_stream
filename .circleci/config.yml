@@ -3,7 +3,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: h3poteto/elixir-rust-node:1.8.2-rust1.38-node10-slim-stretch
+      - image: ghcr.io/h3poteto/elixir-rust-node:1.10.4-rust1.42-node12-slim-buster
     working_directory: /var/opt/app
     steps:
       - checkout
@@ -23,7 +23,7 @@ jobs:
             mix deps.compile
             mix compile
       - save_cache:
-          key: deps-{{ arch }}-elixir1.8.2-{{ checksum "mix.exs" }}-{{ checksum "mix.lock" }}
+          key: deps-{{ arch }}-elixir1.10.4-{{ checksum "mix.exs" }}-{{ checksum "mix.lock" }}
           paths:
             - /var/opt/app/deps
             - /var/opt/app/_build
