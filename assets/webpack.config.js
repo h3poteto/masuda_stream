@@ -76,5 +76,15 @@ module.exports = (env, options) => ({
       },
     ],
   },
-  plugins: [new VueLoaderPlugin(), new CopyWebpackPlugin([{ from: 'static/', to: './' }])],
+  plugins: [
+    new VueLoaderPlugin(),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.join(__dirname, './static'),
+          to: path.join(__dirname, '../priv/static'),
+        },
+      ],
+    }),
+  ],
 })
