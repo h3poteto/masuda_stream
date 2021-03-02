@@ -55,7 +55,7 @@ module.exports = (env, options) => ({
           {
             loader: 'css-loader',
             options: {
-              url: false,
+              esModule: false,
             },
           },
           'sass-loader',
@@ -69,7 +69,7 @@ module.exports = (env, options) => ({
           {
             loader: 'css-loader',
             options: {
-              url: false,
+              esModule: false,
             },
           },
           'sass-loader',
