@@ -15,7 +15,7 @@ config :masuda_stream, MasudaStreamWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "kUCaoCJeP4WmicXwDkg0bhj2eEp/RPv72TNLarha+ID96vprDzd+1+gGMdUwOmaf",
   render_errors: [view: MasudaStreamWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: MasudaStream.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub_server: MasudaStream.PubSub
 
 # Configures Elixir's Logger
 config :logger, :console,
