@@ -51,7 +51,7 @@
 
 <script>
 export default {
-  name: 'about'
+  name: 'about',
 }
 </script>
 
@@ -60,7 +60,7 @@ export default {
   background-color: #fff;
 
   .top-background {
-    background: url('/images/about_background.jpeg') no-repeat;
+    background: require('./images/about_background.jpeg') no-repeat;
     background-position: 50% 50%;
     background-size: cover;
     color: var(--extra-light-border-color);
@@ -138,7 +138,7 @@ export default {
   }
 
   .description-inverse {
-    background: url('/images/about_description.jpg') no-repeat;
+    background: require('./images/about_description.jpg') no-repeat;
     background-position: 50% 50%;
     background-size: cover;
     color: var(--extra-light-border-color);
