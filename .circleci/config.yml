@@ -3,14 +3,14 @@ version: 2
 jobs:
   build:
     docker:
-      - image: ghcr.io/h3poteto/elixir-rust-node:1.10.4-rust1.42-node12-slim-buster
+      - image: ghcr.io/h3poteto/elixir-rust-node:1.11.3-rust1.46-node14-slim-buster
     working_directory: /var/opt/app
     steps:
       - checkout
       - restore_cache:
           keys:
-            - deps-{{ arch }}-elixir1.8.2-{{ checksum "mix.exs" }}-{{ checksum "mix.lock" }}
-            - deps-{{ arch }}-elixir1.8.2-{{ checksum "mix.exs" }}
+            - deps-{{ arch }}-elixir1.11.3-{{ checksum "mix.exs" }}-{{ checksum "mix.lock" }}
+            - deps-{{ arch }}-elixir1.11.3-{{ checksum "mix.exs" }}
       - run:
           name: Install dependencies
           command: |
@@ -29,7 +29,7 @@ jobs:
             mix deps.compile
             mix compile
       - save_cache:
-          key: deps-{{ arch }}-elixir1.10.4-{{ checksum "mix.exs" }}-{{ checksum "mix.lock" }}
+          key: deps-{{ arch }}-elixir1.11.3-{{ checksum "mix.exs" }}-{{ checksum "mix.lock" }}
           paths:
             - /var/opt/app/deps
             - /var/opt/app/_build
