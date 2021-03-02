@@ -1,5 +1,5 @@
 defmodule MasudaStream.Scheduler do
   @moduledoc false
-  use Quantum.Scheduler,
+  use Quantum,
     otp_app: :masuda_stream
 end
