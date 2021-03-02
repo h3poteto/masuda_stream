@@ -1,5 +1,4 @@
 defmodule Mix.Tasks.Rss do
-  @moduledoc false
   use Mix.Task
   alias MasudaStream.Tasks.RSS
 
