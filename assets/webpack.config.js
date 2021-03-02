@@ -50,11 +50,30 @@ module.exports = (env, options) => ({
       },
       {
         test: /\.scss$/,
-        use: ['vue-style-loader', 'css-loader', 'sass-loader'],
+        use: [
+          'vue-style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              url: false,
+            },
+          },
+          'sass-loader',
+        ],
       },
       {
         test: /\.css$/,
-        use: ['vue-style-loader', 'style-loader', 'css-loader', 'sass-loader'],
+        use: [
+          'vue-style-loader',
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              url: false,
+            },
+          },
+          'sass-loader',
+        ],
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
@@ -71,7 +90,7 @@ module.exports = (env, options) => ({
         use: 'url-loader?limit=10000&mimetype=image/svg+xml',
       },
       {
-        test: /\.(jpg|png)$/,
+        test: /\.(jpg|jpeg|png)$/,
         use: 'url-loader',
       },
     ],
