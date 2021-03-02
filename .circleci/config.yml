@@ -17,6 +17,12 @@ jobs:
             mix local.hex --force
             mix deps.get
       - run:
+          name: Install assets
+          working_directory: /var/opt/app/assets
+          command: |
+            npm install
+            npm run deploy
+      - run:
           name: Compile
           command: |
             mix local.rebar --force
