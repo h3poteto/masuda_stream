@@ -49,9 +49,9 @@ export default {
   name: 'stream-index',
   computed: {
     ...mapState({
-      entries: state => state.Stream.Index.entries,
-      lazyloading: state => state.Stream.Index.lazyloading
-    })
+      entries: (state) => state.Stream.Index.entries,
+      lazyloading: (state) => state.Stream.Index.lazyloading,
+    }),
   },
   created() {
     this.$store.dispatch('Stream/Index/fetchEntries', this.$store.state.Stream.Index.entries)
@@ -65,10 +65,11 @@ export default {
       return moment.unix(datetime).format('YYYY-MM-DD HH:mm')
     },
     onScroll(event) {
-      if (
-        document.documentElement.clientHeight + event.pageY >= event.target.body.clientHeight - 10 &&
-        !this.$store.state.Stream.Index.lazyloading
-      ) {
+      if (this.$store.state.Stream.Index.lazyloading) {
+        return
+      }
+
+      if (document.documentElement.clientHeight + document.documentElement.scrollTop >= event.target.body.clientHeight - 20) {
         this.$store.dispatch(
           'Stream/Index/lazyFetchEntries',
           this.$store.state.Stream.Index.entries[this.$store.state.Stream.Index.entries.length - 1].posted_at
@@ -79,8 +80,8 @@ export default {
       // モーダルを開いた際にvue-routerによる遷移をさせることでURLを変えたい
       this.$store.dispatch('Stream/Show/openEntryDetail', entryId)
       this.$router.push({ path: `/entries/${entryId}` })
-    }
-  }
+    },
+  },
 }
 
 Vue.component('sidemenu', Sidemenu)

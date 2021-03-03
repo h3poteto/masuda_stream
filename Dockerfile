@@ -1,4 +1,4 @@
-FROM node:10-alpine AS assets
+FROM node:14-alpine AS assets
 
 COPY ./assets /var/opt/app/assets
 COPY ./priv /var/opt/app/priv
@@ -10,7 +10,7 @@ RUN set -ex && \
     rm -rf node_modules
 
 
-FROM ghcr.io/h3poteto/elixir-rust-node:1.10.4-rust1.42-node12-slim-buster
+FROM ghcr.io/h3poteto/elixir-rust-node:1.11.3-rust1.46-node14-slim-buster
 
 USER root
 
