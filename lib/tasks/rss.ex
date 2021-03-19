@@ -5,7 +5,7 @@ defmodule MasudaStream.Tasks.RSS do
   alias MasudaStream.Repo
 
   @hatena_domain "https://b.hatena.ne.jp"
-  @anond_url "https://anond.hatelabo.jp/"
+  @anond_url "https://anond.hatelabo.jp"
 
   def rss do
     fetch()
