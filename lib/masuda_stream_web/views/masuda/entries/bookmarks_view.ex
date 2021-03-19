@@ -1,6 +1,6 @@
 defmodule MasudaStreamWeb.Masuda.Entries.BookmarksView do
-  use MasudaStreamWeb, :view
   use Timex
+  use MasudaStreamWeb, :view
   alias MasudaStreamWeb.Masuda.Entries.BookmarksView
 
   def render("index.json", %{bookmarks: bookmarks}) do

@@ -1,7 +1,7 @@
 defmodule MasudaStreamWeb.Masuda.EntriesController do
   import Ecto.Query
-  use MasudaStreamWeb, :controller
   use Timex
+  use MasudaStreamWeb, :controller
   alias MasudaStream.Repo
 
   def index(conn, %{"before" => before} = _params) do

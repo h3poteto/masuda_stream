@@ -7,6 +7,13 @@ defmodule MasudaStream.Tasks.RSS do
   @hatena_domain "https://b.hatena.ne.jp"
   @anond_url "https://anond.hatelabo.jp/"
 
+  def rss do
+    fetch()
+  rescue
+    exception ->
+      Rollbax.report(:error, exception, __STACKTRACE__)
+  end
+
   def fetch() do
     get()
     |> Enum.map(fn item ->
@@ -22,7 +29,7 @@ defmodule MasudaStream.Tasks.RSS do
   def get() do
     rss_url = "#{@hatena_domain}/entrylist?mode=rss&url=#{@anond_url}&sort=recent"
     Logger.info("Fetching #{rss_url} ...")
-    {:ok, %HTTPoison.Response{body: body}} = HTTPoison.get(rss_url)
+    {:ok, %HTTPoison.Response{status_code: 200, body: body}} = HTTPoison.get(rss_url)
 
     body
     |> Quinn.parse()

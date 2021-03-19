@@ -3,12 +3,17 @@ version: '3'
 services:
   elixir:
     image: ghcr.io/h3poteto/elixir-rust-node:1.11.3-rust1.46-node14-slim-buster
+    user: root
     environment:
       HATENA_CONSUMER_KEY: $HATENA_CONSUMER_KEY
       HATENA_CONSUMER_SECRET: $HATENA_CONSUMER_SECRET
+      ROLLBAR_ACCESS_TOKEN: $ROLLBAR_ACCESS_TOKEN
     working_dir: /var/opt/app
     volumes:
       - .:/var/opt/app
+      - build:/var/opt/app/_build
+      - deps:/var/opt/app/deps
+      - node_modules:/var/opt/app/assets/node_modules
     links:
       - postgres:postgres
     ports:
@@ -27,3 +32,6 @@ services:
 
 volumes:
   storage:
+  deps:
+  build:
+  node_modules:
