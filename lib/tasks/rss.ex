@@ -20,9 +20,9 @@ defmodule MasudaStream.Tasks.RSS do
   end
 
   def get() do
-    rss_url = "#{@hatena_domain}/entrylist?mode=rss&url=#{@anond_url}&sort=recent"
+    rss_url = "#{@hatena_domain}/site/#{@anond_url}/?mode=rss&sort=recent"
     Logger.info("Fetching #{rss_url} ...")
-    {:ok, %HTTPoison.Response{body: body}} = HTTPoison.get(rss_url)
+    {:ok, %HTTPoison.Response{status_code: 200, body: body}} = HTTPoison.get(rss_url)
 
     body
     |> Quinn.parse()
