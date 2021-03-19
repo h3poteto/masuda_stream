@@ -22,7 +22,7 @@ config :logger, backends: [:console]
 config :masuda_stream, MasudaStream.Scheduler,
   jobs: [
     # Every 15 minutes
-    {"*/15 * * * *", {MasudaStream.Tasks.RSS, :fetch, []}}
+    {"*/15 * * * *", {MasudaStream.Tasks.RSS, :rss, []}}
   ]
 
 # ## SSL Support

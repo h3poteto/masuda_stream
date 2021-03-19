@@ -78,5 +78,11 @@ config :phoenix, :plug_init_mode, :runtime
 config :masuda_stream, MasudaStream.Scheduler,
   jobs: [
     # Every 15 minutes
-    {"*/15 * * * *", {MasudaStream.Tasks.RSS, :get, []}}
+    {"*/2 * * * *", {MasudaStream.Tasks.RSS, :rss, []}}
   ]
+
+config :rollbax,
+  access_token: System.get_env("ROLLBAR_ACCESS_TOKEN"),
+  environment: "development",
+  enable_crash_reports: true,
+  enabled: :log
