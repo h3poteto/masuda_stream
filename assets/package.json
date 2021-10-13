@@ -7,7 +7,7 @@
     "eslint": "eslint --config ../.eslintrc.json --ext .js,.vue -f ./node_modules/eslint-friendly-formatter js"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.23.0",
     "axios-progress-bar": "^1.2.0",
     "element-ui": "^2.15.3",
     "moment": "^2.29.1",
