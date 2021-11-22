@@ -48,7 +48,7 @@ defmodule MasudaStream.MixProject do
       {:floki, "~> 0.31.0"},
       # We can not update elixir 1.9.1, because html5ever does not support OTP22.
       # So I'm waiting for this pull request: https://github.com/hansihe/html5ever_elixir/pull/14
-      {:html5ever, "~> 0.8.0"},
+      {:html5ever, "~> 0.9.0"},
       {:plug, "~> 1.0"},
       {:json, "~> 1.2"},
       # To parse RSS 1.0
