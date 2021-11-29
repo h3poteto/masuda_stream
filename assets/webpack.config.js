@@ -1,7 +1,6 @@
 const path = require('path')
 const glob = require('glob')
 const TerserPlugin = require('terser-webpack-plugin')
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 
@@ -11,7 +10,7 @@ const filename = production ? '[name]-[hash]' : '[name]'
 module.exports = (env, options) => ({
   optimization: {
     minimize: options.mode === 'production' || production,
-    minimizer: [new TerserPlugin({}), new OptimizeCSSAssetsPlugin({})],
+    minimizer: [new TerserPlugin({})],
   },
   entry: {
     'js/app': path.resolve(__dirname, './js/app.js'),
@@ -79,7 +78,7 @@ module.exports = (env, options) => ({
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         use: {
           loader: 'url-loader',
-          query: {
+          options: {
             limit: 10000,
             name: '/fonts/[name]--[folder].[ext]',
           },
