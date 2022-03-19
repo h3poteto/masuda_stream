@@ -1,18 +1,15 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import GlobalHeader from './components/GlobalHeader.vue'
 import StreamIndex from './components/Stream/Index.vue'
 import StreamShow from './components/Stream/Show.vue'
 import Login from './components/Login.vue'
 import About from './components/About.vue'
 
-Vue.use(VueRouter)
-
 const routes = [
   {
     path: '/about',
     component: About,
-    name: 'about'
+    name: 'about',
   },
   {
     path: '/',
@@ -27,22 +24,22 @@ const routes = [
           {
             path: 'entries/:id',
             component: StreamShow,
-            name: 'stream-show'
-          }
-        ]
+            name: 'stream-show',
+          },
+        ],
       },
       {
         path: 'auth/login',
         component: Login,
-        name: 'login'
-      }
-    ]
-  }
+        name: 'login',
+      },
+    ],
+  },
 ]
 
-const router = new VueRouter({
-  mode: 'history',
-  routes: routes
+const router = createRouter({
+  mode: createWebHistory(),
+  routes: routes,
 })
 
 export default router
