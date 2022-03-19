@@ -1,5 +1,4 @@
-import { createStore } from 'vuex'
-import createLogger from 'vuex/dist/logger'
+import { createStore, createLogger } from 'vuex'
 
 import GlobalHeader from './GlobalHeader'
 import Stream from './Stream'

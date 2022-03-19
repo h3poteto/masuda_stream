@@ -44,7 +44,7 @@ const Show = {
     },
     setUserBookmarked(state, response) {
       state.userBookmarked = response
-    }
+    },
   },
   actions: {
     openEntryDetail({ commit }) {
@@ -91,14 +91,18 @@ const Show = {
     addBookmark({ commit }, form) {
       return new Promise((resolve, reject) => {
         axios
-          .post('/api/user/bookmark', {
-            comment: form.comment,
-            url: form.url,
-          }, {
-            headers: {
-              'X-CSRFToken': form.csrf,
+          .post(
+            '/api/user/bookmark',
+            {
+              comment: form.comment,
+              url: form.url,
+            },
+            {
+              headers: {
+                'X-CSRFToken': form.csrf,
+              },
             }
-          })
+          )
           .then((res) => {
             commit('changeAlreadyBookmarked', true)
             commit('setUserBookmarked', res.data)
@@ -119,8 +123,8 @@ const Show = {
         .catch(() => {
           commit('changeAlreadyBookmarked', false)
         })
-    }
-  }
+    },
+  },
 }
 
 export default Show

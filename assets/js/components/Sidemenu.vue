@@ -3,7 +3,9 @@
     <p><a href="/about">MasudaStreamについて</a></p>
     <p>
       &copy; 2019
-      <a href="https://pleroma.io/users/h3poteto" target="_blank">@h3poteto@pleroma.io</a>
+      <a href="https://pleroma.io/users/h3poteto" target="_blank"
+        >@h3poteto@pleroma.io</a
+      >
     </p>
   </div>
 </template>
@@ -13,7 +15,7 @@ export default {
   name: 'sidemenu',
   data() {
     return {}
-  }
+  },
 }
 </script>
 

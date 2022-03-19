@@ -6,7 +6,7 @@ const Stream = {
   modules: {
     Index,
     Show,
-  }
+  },
 }
 
 export default Stream

@@ -14,7 +14,7 @@
               <div class="line"></div>
               <div class="tool-box">
                 <div class="comment">
-                  <icon name="comment"></icon>
+                  <font-awesome-icon icon="comment" />
                   <span>{{ entry.hatena_bookmarkcount }}</span>
                 </div>
                 <div class="date">
@@ -42,11 +42,13 @@
 <script>
 import { mapState } from 'vuex'
 import moment from 'moment'
-import Vue from 'vue'
 import Sidemenu from '../Sidemenu'
 
 export default {
   name: 'stream-index',
+  components: {
+    Sidemenu,
+  },
   computed: {
     ...mapState({
       entries: (state) => state.Stream.Index.entries,
@@ -83,8 +85,6 @@ export default {
     },
   },
 }
-
-Vue.component('sidemenu', Sidemenu)
 </script>
 
 <style lang="scss" scoped>
