@@ -16,7 +16,7 @@
           <div class="right-menu">
             <el-menu-item index="1" :route="{ path: '/' }">エントリー</el-menu-item>
             <el-sub-menu index="3" v-if="isLoggedIn()">
-              <template v-slot="title"><img class="avatar" :src="user.avatar_url" /></template>
+              <template #title><img class="avatar" :src="user.avatar_url" /></template>
               <el-menu-item index="3-1" :route="{ path: '/' }">ログアウト</el-menu-item>
             </el-sub-menu>
             <el-menu-item index="4" v-if="!isLoggedIn()" :route="{ path: '/auth/login' }">ログイン</el-menu-item>
