@@ -3,7 +3,7 @@ use Mix.Config
 # Configure your database
 config :masuda_stream, MasudaStream.Repo,
   username: System.get_env("DB_USERNAME") || "postgres",
-  password: System.get_env("DB_PASSWORD") || "",
+  password: System.get_env("DB_PASSWORD") || "postgres",
   database: System.get_env("DB_NAME") || "masuda_stream",
   hostname: System.get_env("DB_HOSTNAME") || "postgres",
   show_sensitive_data_on_connection_error: true,

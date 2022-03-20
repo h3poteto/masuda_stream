@@ -25,6 +25,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_DB: masuda_stream
+      POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
     volumes:

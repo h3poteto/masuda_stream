@@ -1,10 +1,14 @@
-import { createStore, createLogger, Store } from 'vuex'
+import { createStore, createLogger, useStore as baseUseStore, Store } from 'vuex'
 import { InjectionKey } from 'vue'
 
 import GlobalHeader, { GlobalHeaderState } from './GlobalHeader'
 import Stream, { StreamModuleState } from './Stream'
 
 export const key: InjectionKey<Store<RootState>> = Symbol()
+
+export function useStore() {
+  return baseUseStore(key)
+}
 
 export interface RootState {
   GlobalHeader: GlobalHeaderState

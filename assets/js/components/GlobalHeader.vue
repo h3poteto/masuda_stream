@@ -26,42 +26,55 @@
   </div>
 </template>
 
-<script>
-import { mapState } from 'vuex'
+<script lang="ts">
+import { defineComponent, computed, onMounted } from 'vue'
+import { useCookie } from 'vue-cookie-next'
+import { ElMessage } from 'element-plus'
+import { useRouter } from 'vue-router'
+import { useStore } from '../vuex'
+import { ACTION_TYPES } from '../vuex/GlobalHeader'
 
-export default {
-  name: 'global-header',
-  computed: {
-    ...mapState({
-      user: (state) => state.GlobalHeader.user,
-      activeIndex: (state) => state.GlobalHeader.activeIndex,
-    }),
-  },
-  created() {
-    this.$store.dispatch('GlobalHeader/fetchUser')
-  },
-  methods: {
-    isLoggedIn() {
-      return this.user !== null
-    },
-    handleSelect(key, keyPath) {
+export default defineComponent({
+  setup() {
+    const store = useStore()
+    const user = computed(() => store.state.GlobalHeader.user)
+    const activeIndex = computed(() => store.state.GlobalHeader.activeIndex)
+    const { getCookie } = useCookie()
+    const router = useRouter()
+
+    onMounted(() => {
+      store.dispatch(`GlobalHeader/${ACTION_TYPES.FETCH_USER}`)
+    })
+
+    const isLoggedIn = () => {
+      return user.value
+    }
+
+    const handleSelect = async (key: string, _keyPath: string) => {
       switch (key) {
         case '3-1':
           // ログアウトにはCSRFTokenが必要になる
-          let csrf = this.$cookie.getCookie('csrftoken')
-          return this.$store.dispatch('GlobalHeader/logout', csrf).then((res) => {
-            this.$message({
+          let csrf = getCookie('csrftoken')
+          return store.dispatch(`GlobalHeader/${ACTION_TYPES.LOGOUT}`, csrf).then((res) => {
+            ElMessage({
               message: 'ログアウトしました',
               type: 'success',
             })
-            this.$store.dispatch('GlobalHeader/changeActiveIndex', '1')
+            store.dispatch(`GlobalHeader/${ACTION_TYPES.CHANGE_ACTIVE_INDEX}`, '1')
           })
         case '4':
-          return this.$router.push('/auth/login')
+          return router.push('/auth/login')
       }
-    },
+    }
+
+    return {
+      user,
+      activeIndex,
+      isLoggedIn,
+      handleSelect,
+    }
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>
