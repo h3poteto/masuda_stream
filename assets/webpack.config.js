@@ -3,6 +3,7 @@ const glob = require('glob')
 const TerserPlugin = require('terser-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
+const webpack = require('webpack')
 
 const production = process.env.NODE_ENV === 'production'
 const filename = production ? '[name]-[hash]' : '[name]'
@@ -116,6 +117,10 @@ module.exports = (env, options) => ({
           to: path.join(__dirname, '../priv/static'),
         },
       ],
+    }),
+    new webpack.DefinePlugin({
+      __VUE_OPTIONS_API__: true,
+      __VUE_PROD_DEVTOOLS__: false,
     }),
   ],
 })
