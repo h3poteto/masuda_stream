@@ -2,7 +2,7 @@ version: '3'
 
 services:
   elixir:
-    image: ghcr.io/h3poteto/elixir-rust-node:1.11.3-rust1.46-node14-slim-buster
+    image: ghcr.io/h3poteto/elixir-rust-node:1.12.3-rust1.58-node16-slim-buster
     user: root
     environment:
       HATENA_CONSUMER_KEY: $HATENA_CONSUMER_KEY
@@ -21,7 +21,7 @@ services:
     command: /bin/bash
 
   postgres:
-    image: postgres:11.2-alpine
+    image: postgres:13-alpine
     environment:
       POSTGRES_USER: postgres
       POSTGRES_DB: masuda_stream
