@@ -9,7 +9,7 @@ import { faComment, faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import router from './router'
-import store from './vuex'
+import store, { key } from './vuex'
 import App from './App.vue'
 
 loadProgressBar()
@@ -18,7 +18,7 @@ library.add(faComment)
 library.add(faArrowUpRightFromSquare)
 
 const app = createApp(App)
-app.use(store)
+app.use(store, key)
 app.use(router)
 app.use(VueCookieNext)
 app.use(ElementPlus)

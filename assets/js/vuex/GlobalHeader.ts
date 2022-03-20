@@ -1,9 +1,10 @@
 import axios from 'axios'
 import { ActionTree, MutationTree } from 'vuex'
 import { RootState } from '.'
+import { User } from '../entity/user'
 
 export type GlobalHeaderState = {
-  user: any
+  user: User | null
   activeIndex: string
 }
 
@@ -30,8 +31,14 @@ const mutations: MutationTree<GlobalHeaderState> = {
   },
 }
 
+export const ACTION_TYPES = {
+  FETCH_USER: 'fetchUser',
+  LOGOUT: 'logout',
+  CHANGE_ACTIVE_INDEX: 'changeActiveIndex',
+}
+
 const actions: ActionTree<GlobalHeaderState, RootState> = {
-  fetchUser: async ({ commit }) => {
+  [ACTION_TYPES.FETCH_USER]: async ({ commit }) => {
     try {
       const res = await axios.get('/api/user/my')
       commit(MUTATION_TYPES.LOAD_USER, res.data.user)
@@ -40,7 +47,7 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
       console.log(err)
     }
   },
-  logout: async ({ commit }, csrf: string) => {
+  [ACTION_TYPES.LOGOUT]: async ({ commit }, csrf: string) => {
     return new Promise((resolve, reject) => {
       axios
         .delete('/api/user/logout', {
@@ -57,7 +64,7 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
         })
     })
   },
-  changeActiveIndex: ({ commit }, index: string) => {
+  [ACTION_TYPES.CHANGE_ACTIVE_INDEX]: ({ commit }, index: string) => {
     commit(MUTATION_TYPES.CHANGE_ACTIVE_INDEX, index)
   },
 }
