@@ -31,7 +31,11 @@ const state = (): ShowState => ({
   entryDetailVisible: true,
   loading: true,
   userAlreadyBookmarked: false,
-  userBookmarked: {},
+  userBookmarked: {
+    comment: '',
+    created_datetime: '',
+    user: '',
+  },
 })
 
 const MUTATION_TYPES = {
