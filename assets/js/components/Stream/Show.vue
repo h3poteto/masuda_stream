@@ -19,9 +19,9 @@
       <div class="my-bookmark">
         <div class="my-comment" v-if="isLoggedIn() && userAlreadyBookmarked">
           <div class="bookmark">
-            <div class="icon"><img :src="user.avatar_url" /></div>
+            <div class="icon"><img :src="loginedUser.avatar_url" /></div>
             <div class="head-wrapper">
-              <div class="user">{{ user.uid }}</div>
+              <div class="user">{{ loginedUser.uid }}</div>
               <div class="bookmarked_at">
                 {{ cutJSTDatetime(userBookmarked.created_datetime) }}
               </div>
@@ -76,7 +76,8 @@ export default {
       bookmarkRules: {
         comment: [
           {
-            min: 0,
+            required: false,
+            min: 1,
             max: 100,
             message: 'コメントは100文字以内にしてください',
             trigger: 'blur',
@@ -90,7 +91,7 @@ export default {
       entry: (state) => state.Stream.Show.entry,
       loading: (state) => state.Stream.Show.loading,
       bookmarks: (state) => state.Stream.Show.bookmarks,
-      user: (state) => state.GlobalHeader.user,
+      loginedUser: (state) => state.GlobalHeader.user,
       userAlreadyBookmarked: (state) => state.Stream.Show.userAlreadyBookmarked,
       userBookmarked: (state) => state.Stream.Show.userBookmarked,
     }),
@@ -106,7 +107,7 @@ export default {
   created() {
     this.$store.dispatch('Stream/Show/startLoading', this.$store.state.Stream.Show.loading)
     this.$store.dispatch('Stream/Show/loadEntry', this.$route.params.id).then((res) => {
-      let url = res.data.entry.link
+      let url = res.link
       this.$store.dispatch('Stream/Show/fetchUserBookmark', url)
     })
     this.$store.dispatch('Stream/Show/loadBookmarks', this.$route.params.id)
@@ -123,19 +124,19 @@ export default {
       this.$store.dispatch('Stream/Show/cleanup', e)
       this.$router.push({ path: '/' })
     },
-    icon(user) {
-      return `http://cdn1.www.st-hatena.com/users/${user.slice(0, 2)}/${user}/profile.gif`
+    icon(hatena_user) {
+      return `http://cdn1.www.st-hatena.com/users/${hatena_user.slice(0, 2)}/${hatena_user}/profile.gif`
     },
     isLoggedIn() {
-      return this.$store.state.GlobalHeader.user !== null
+      return this.loginedUser
     },
     goToLoginPage() {
       window.location.href = '/auth/hatena'
     },
     submitBookmark() {
-      this.$refs['bookmarkForm'].validate((valid) => {
+      this.$refs['bookmarkForm'].validate((valid, fields) => {
         if (valid) {
-          let csrf = this.$cookie.get('csrftoken')
+          let csrf = this.$cookie.getCookie('csrftoken')
           this.$store
             .dispatch(
               'Stream/Show/addBookmark',
@@ -157,6 +158,7 @@ export default {
               })
             })
         } else {
+          console.error(fields)
           this.$message({
             message: 'エラーがあります',
             type: 'error',
