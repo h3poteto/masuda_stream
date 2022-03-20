@@ -46,7 +46,7 @@ module.exports = (env, options) => ({
               optimizeSSR: false,
               compilerOptions: {
                 compatConfig: {
-                  MODE: 2,
+                  MODE: 3,
                 },
               },
             },
