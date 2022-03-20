@@ -32,7 +32,7 @@ const GlobalHeader = {
     logout({ commit }, csrf) {
       return new Promise((resolve, reject) => {
         axios
-          .delete('/api/user/logout', null, {
+          .delete('/api/user/logout', {
             headers: {
               'X-CSRFToken': csrf,
             },
