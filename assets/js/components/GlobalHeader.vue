@@ -10,15 +10,17 @@
           :router="true"
           @select="handleSelect"
         >
-          <span class="title-logo">MasudaStream</span>
-          <el-menu-item index="1" :route="{ path: '/' }">エントリー</el-menu-item>
-          <el-submenu index="3" v-if="isLoggedIn()" class="right-menu">
-            <template slot="title"
-              ><img class="avatar" :src="user.avatar_url"
-            /></template>
-            <el-menu-item index="3-1" :route="{ path: '/' }">ログアウト</el-menu-item>
-          </el-submenu>
-          <el-menu-item index="4" v-if="!isLoggedIn()" class="right-menu" :route="{ path: '/auth/login' }">ログイン</el-menu-item>
+          <div class="left-menu">
+            <span class="title-logo">MasudaStream</span>
+          </div>
+          <div class="right-menu">
+            <el-menu-item index="1" :route="{ path: '/' }">エントリー</el-menu-item>
+            <el-sub-menu index="3" v-if="isLoggedIn()">
+              <template #title><img class="avatar" :src="user.avatar_url" /></template>
+              <el-menu-item index="3-1" :route="{ path: '/' }">ログアウト</el-menu-item>
+            </el-sub-menu>
+            <el-menu-item index="4" v-if="!isLoggedIn()" :route="{ path: '/auth/login' }">ログイン</el-menu-item>
+          </div>
         </el-menu>
       </el-header>
       <el-main>
@@ -35,9 +37,9 @@ export default {
   name: 'global-header',
   computed: {
     ...mapState({
-      user: state => state.GlobalHeader.user,
-      activeIndex: state => state.GlobalHeader.activeIndex
-    })
+      user: (state) => state.GlobalHeader.user,
+      activeIndex: (state) => state.GlobalHeader.activeIndex,
+    }),
   },
   created() {
     this.$store.dispatch('GlobalHeader/fetchUser')
@@ -51,18 +53,18 @@ export default {
         case '3-1':
           // ログアウトにはCSRFTokenが必要になる
           let csrf = this.$cookie.get('csrftoken')
-          return this.$store.dispatch('GlobalHeader/logout', csrf).then(res => {
+          return this.$store.dispatch('GlobalHeader/logout', csrf).then((res) => {
             this.$message({
               message: 'ログアウトしました',
-              type: 'success'
+              type: 'success',
             })
             this.$store.dispatch('GlobalHeader/changeActiveIndex', '1')
           })
         case '4':
           return this.$router.push('/auth/login')
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -70,20 +72,27 @@ export default {
 .el-header {
   padding: 0;
 
+  .header-menu {
+    padding-left: 3.5em;
+    padding-right: 3.5em;
+    display: flex;
+    justify-content: space-between;
+  }
+
   .title-logo {
-    float: left;
     height: 60px;
     line-height: 60px;
     padding-right: 1.5em;
   }
 
-  .header-menu {
-    padding-left: 3.5em;
-    padding-right: 3.5em;
+  .left-menu {
+    display: flex;
+    justify-content: flex-start;
   }
 
   .right-menu {
-    float: right;
+    display: flex;
+    justify-content: flex-end;
   }
 
   img.avatar {

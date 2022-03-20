@@ -3,7 +3,9 @@
     <el-row :gutter="20">
       <el-col :span="18">
         <div class="gird-content not-login">
-          <el-button type="primary" @click="login">はてなアカウントでログイン</el-button>
+          <el-button type="primary" @click="login"
+            >はてなアカウントでログイン</el-button
+          >
         </div>
       </el-col>
       <el-col :span="6">
@@ -26,8 +28,8 @@ export default {
   methods: {
     login() {
       window.location.href = '/auth/hatena'
-    }
-  }
+    },
+  },
 }
 </script>
 

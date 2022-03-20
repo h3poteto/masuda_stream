@@ -11,7 +11,7 @@ const Index = {
         content: '',
         hatena_bookmarkcount: 0,
         posted_at: '',
-      }
+      },
     ],
     lazyloading: false,
   },

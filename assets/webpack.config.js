@@ -21,10 +21,10 @@ module.exports = (env, options) => ({
   },
   resolve: {
     alias: {
+      vue: '@vue/compat',
       // Same as tsconfig.json
       '@': path.join(__dirname, './js'),
       '~': path.join(__dirname, './'),
-      vue$: 'vue/dist/vue.esm.js',
     },
     extensions: ['.ts', '.js', '.vue', '.json', '.css', '.node'],
   },
@@ -43,9 +43,22 @@ module.exports = (env, options) => ({
             options: {
               esModule: true,
               optimizeSSR: false,
+              compilerOptions: {
+                compatConfig: {
+                  MODE: 2,
+                },
+              },
             },
           },
         ],
+      },
+      {
+        test: /\.mjs$/,
+        resolve: {
+          fullySpecified: false,
+        },
+        include: /node_modules/,
+        type: 'javascript/auto',
       },
       {
         test: /\.scss$/,

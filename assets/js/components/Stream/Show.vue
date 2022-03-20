@@ -1,14 +1,14 @@
 <template>
   <div>
-    <el-dialog :title="entry.title" :visible.sync="entryDetailVisible" @close="handleClose">
-      <a v-bind:href="entry.link"
-        ><el-button class="entry-info" type="text"><i class="el-icon-info"></i></el-button
+    <el-dialog :title="entry.title" :model-value="entryDetailVisible" @close="handleClose">
+      <a v-bind:href="entry.link" target="_blank"
+        ><el-button class="entry-info" type="text"> <font-awesome-icon icon="arrow-up-right-from-square" /> </el-button
       ></a>
       <div v-html="entry.anond_content_html" class="anond-content" v-loading="loading"></div>
       <div class="line"></div>
       <div class="tool-box">
         <div class="comment">
-          <icon name="comment"></icon>
+          <font-awesome-icon icon="comment" />
           <span>{{ entry.hatena_bookmarkcount }}</span>
         </div>
         <div class="date">
@@ -22,7 +22,9 @@
             <div class="icon"><img :src="user.avatar_url" /></div>
             <div class="head-wrapper">
               <div class="user">{{ user.uid }}</div>
-              <div class="bookmarked_at">{{ cutJSTDatetime(userBookmarked.created_datetime) }}</div>
+              <div class="bookmarked_at">
+                {{ cutJSTDatetime(userBookmarked.created_datetime) }}
+              </div>
             </div>
             <div class="comment">{{ userBookmarked.comment }}</div>
             <div class="clearfix"></div>
@@ -47,7 +49,9 @@
           <div class="icon"><img :src="icon(bookmark.user)" /></div>
           <div class="head-wrapper">
             <div class="user">{{ bookmark.user }}</div>
-            <div class="bookmarked_at">{{ parseDatetime(bookmark.bookmarked_at) }}</div>
+            <div class="bookmarked_at">
+              {{ parseDatetime(bookmark.bookmarked_at) }}
+            </div>
           </div>
           <div class="comment">{{ bookmark.comment }}</div>
           <div class="clearfix"></div>
@@ -67,21 +71,28 @@ export default {
   data() {
     return {
       bookmarkForm: {
-        comment: ''
+        comment: '',
       },
       bookmarkRules: {
-        comment: [{ min: 0, max: 100, message: 'コメントは100文字以内にしてください', trigger: 'blur' }]
-      }
+        comment: [
+          {
+            min: 0,
+            max: 100,
+            message: 'コメントは100文字以内にしてください',
+            trigger: 'blur',
+          },
+        ],
+      },
     }
   },
   computed: {
     ...mapState({
-      entry: state => state.Stream.Show.entry,
-      loading: state => state.Stream.Show.loading,
-      bookmarks: state => state.Stream.Show.bookmarks,
-      user: state => state.GlobalHeader.user,
-      userAlreadyBookmarked: state => state.Stream.Show.userAlreadyBookmarked,
-      userBookmarked: state => state.Stream.Show.userBookmarked
+      entry: (state) => state.Stream.Show.entry,
+      loading: (state) => state.Stream.Show.loading,
+      bookmarks: (state) => state.Stream.Show.bookmarks,
+      user: (state) => state.GlobalHeader.user,
+      userAlreadyBookmarked: (state) => state.Stream.Show.userAlreadyBookmarked,
+      userBookmarked: (state) => state.Stream.Show.userBookmarked,
     }),
     entryDetailVisible: {
       get() {
@@ -89,12 +100,12 @@ export default {
       },
       set(value) {
         this.$store.commit('Stream/Show/changeEntryDetailVisible', value)
-      }
-    }
+      },
+    },
   },
   created() {
     this.$store.dispatch('Stream/Show/startLoading', this.$store.state.Stream.Show.loading)
-    this.$store.dispatch('Stream/Show/loadEntry', this.$route.params.id).then(res => {
+    this.$store.dispatch('Stream/Show/loadEntry', this.$route.params.id).then((res) => {
       let url = res.data.entry.link
       this.$store.dispatch('Stream/Show/fetchUserBookmark', url)
     })
@@ -122,7 +133,7 @@ export default {
       window.location.href = '/auth/hatena'
     },
     submitBookmark() {
-      this.$refs['bookmarkForm'].validate(valid => {
+      this.$refs['bookmarkForm'].validate((valid) => {
         if (valid) {
           let csrf = this.$cookie.get('csrftoken')
           this.$store
@@ -130,30 +141,30 @@ export default {
               'Stream/Show/addBookmark',
               Object.assign({}, this.bookmarkForm, {
                 csrf: csrf,
-                url: this.entry.link
+                url: this.entry.link,
               })
             )
-            .then(res => {
+            .then((res) => {
               this.$message({
                 message: 'ブックマークしました',
-                type: 'success'
+                type: 'success',
               })
             })
-            .catch(err => {
+            .catch((err) => {
               this.$message({
                 message: 'ブックマークできませんでした',
-                type: 'error'
+                type: 'error',
               })
             })
         } else {
           this.$message({
             message: 'エラーがあります',
-            type: 'error'
+            type: 'error',
           })
         }
       })
-    }
-  }
+    },
+  },
 }
 </script>
 

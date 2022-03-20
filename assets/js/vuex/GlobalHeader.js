@@ -4,7 +4,7 @@ const GlobalHeader = {
   namespaced: true,
   state: {
     user: null,
-    activeIndex: '1'
+    activeIndex: '1',
   },
   mutations: {
     loadUser(state, data) {
@@ -15,16 +15,16 @@ const GlobalHeader = {
     },
     changeActiveIndex(state, index) {
       state.activeIndex = index
-    }
+    },
   },
   actions: {
     fetchUser({ commit }) {
       axios
         .get('/api/user/my')
-        .then(res => {
+        .then((res) => {
           commit('loadUser', res.data)
         })
-        .catch(err => {
+        .catch((err) => {
           // eslint-disable-next-line no-console
           console.log(err)
         })
@@ -34,22 +34,22 @@ const GlobalHeader = {
         axios
           .delete('/api/user/logout', null, {
             headers: {
-              'X-CSRFToken': csrf
-            }
+              'X-CSRFToken': csrf,
+            },
           })
-          .then(res => {
+          .then((res) => {
             commit('logoutUser', res.data)
             resolve(res)
           })
-          .catch(err => {
+          .catch((err) => {
             reject(err)
           })
       })
     },
     changeActiveIndex({ commit }, index) {
       commit('changeActiveIndex', index)
-    }
-  }
+    },
+  },
 }
 
 export default GlobalHeader
