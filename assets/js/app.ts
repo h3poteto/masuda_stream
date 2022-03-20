@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import router from './router'
 import store from './vuex'
-import App from './App'
+import App from './App.vue'
 
 loadProgressBar()
 

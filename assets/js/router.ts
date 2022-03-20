@@ -1,11 +1,11 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import GlobalHeader from './components/GlobalHeader.vue'
 import StreamIndex from './components/Stream/Index.vue'
 import StreamShow from './components/Stream/Show.vue'
 import Login from './components/Login.vue'
 import About from './components/About.vue'
 
-const routes = [
+const routes: Array<RouteRecordRaw> = [
   {
     path: '/about',
     component: About,

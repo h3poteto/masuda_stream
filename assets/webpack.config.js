@@ -1,5 +1,4 @@
 const path = require('path')
-const glob = require('glob')
 const TerserPlugin = require('terser-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
@@ -14,7 +13,7 @@ module.exports = (env, options) => ({
     minimizer: [new TerserPlugin({})],
   },
   entry: {
-    'js/app': path.resolve(__dirname, './js/app.js'),
+    'js/app': path.resolve(__dirname, './js/app.ts'),
   },
   output: {
     filename: `${filename}.js`,
@@ -35,6 +34,18 @@ module.exports = (env, options) => ({
         test: /\.js$/,
         exclude: /node_modules/,
         use: ['babel-loader'],
+      },
+      {
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'ts-loader',
+            options: {
+              appendTsSuffixTo: [/\.vue$/],
+            },
+          },
+        ],
       },
       {
         test: /\.vue?$/,
