@@ -10,17 +10,13 @@
           :router="true"
           @select="handleSelect"
         >
-          <div class="left-menu">
-            <span class="title-logo">MasudaStream</span>
-          </div>
-          <div class="right-menu">
-            <el-menu-item index="1" :route="{ path: '/' }">エントリー</el-menu-item>
-            <el-sub-menu index="3" v-if="isLoggedIn()">
-              <template #title><img class="avatar" :src="user.avatar_url" /></template>
-              <el-menu-item index="3-1" :route="{ path: '/' }">ログアウト</el-menu-item>
-            </el-sub-menu>
-            <el-menu-item index="4" v-if="!isLoggedIn()" :route="{ path: '/auth/login' }">ログイン</el-menu-item>
-          </div>
+          <span class="title-logo">MasudaStream</span>
+          <el-menu-item index="1" :route="{ path: '/' }">エントリー</el-menu-item>
+          <el-sub-menu index="3" v-if="isLoggedIn()">
+            <template #title><img class="avatar" :src="user.avatar_url" /></template>
+            <el-menu-item index="3-1" :route="{ path: '/' }">ログアウト</el-menu-item>
+          </el-sub-menu>
+          <el-menu-item index="4" v-if="!isLoggedIn()" :route="{ path: '/auth/login' }">ログイン</el-menu-item>
         </el-menu>
       </el-header>
       <el-main>
@@ -52,7 +48,7 @@ export default {
       switch (key) {
         case '3-1':
           // ログアウトにはCSRFTokenが必要になる
-          let csrf = this.$cookie.get('csrftoken')
+          let csrf = this.$cookie.getCookie('csrftoken')
           return this.$store.dispatch('GlobalHeader/logout', csrf).then((res) => {
             this.$message({
               message: 'ログアウトしました',
@@ -75,8 +71,6 @@ export default {
   .header-menu {
     padding-left: 3.5em;
     padding-right: 3.5em;
-    display: flex;
-    justify-content: space-between;
   }
 
   .title-logo {
