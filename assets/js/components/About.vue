@@ -46,9 +46,7 @@
     <footer>
       <p>
         &copy; 2019
-        <a href="https://pleroma.io/users/h3poteto" target="_blank"
-          >@h3poteto@pleroma.io</a
-        >
+        <a href="https://pleroma.io/users/h3poteto" target="_blank">@h3poteto@pleroma.io</a>
       </p>
     </footer>
   </div>
@@ -65,7 +63,7 @@ export default {
   background-color: #fff;
 
   .top-background {
-    background: require('./images/about_background.jpeg') no-repeat;
+    background: url('/static/images/about_background.jpeg') no-repeat;
     background-position: 50% 50%;
     background-size: cover;
     color: var(--extra-light-border-color);
@@ -143,7 +141,7 @@ export default {
   }
 
   .description-inverse {
-    background: require('./images/about_description.jpg') no-repeat;
+    background: url('/static/images/about_description.jpg') no-repeat;
     background-position: 50% 50%;
     background-size: cover;
     color: var(--extra-light-border-color);
