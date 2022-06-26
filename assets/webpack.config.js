@@ -21,7 +21,6 @@ module.exports = (env, options) => ({
   },
   resolve: {
     alias: {
-      vue: '@vue/compat',
       // Same as tsconfig.json
       '@': path.join(__dirname, './js'),
       '~': path.join(__dirname, './'),
@@ -55,11 +54,6 @@ module.exports = (env, options) => ({
             options: {
               esModule: true,
               optimizeSSR: false,
-              compilerOptions: {
-                compatConfig: {
-                  MODE: 3,
-                },
-              },
             },
           },
         ],
