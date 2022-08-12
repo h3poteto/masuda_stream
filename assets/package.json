@@ -7,7 +7,7 @@
     "eslint": "eslint --config ../.eslintrc.json --ext .js,.vue -f ./node_modules/eslint-friendly-formatter js"
   },
   "dependencies": {
-    "@element-plus/icons-vue": "^1.1.3",
+    "@element-plus/icons-vue": "^2.0.9",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.0",
     "@fortawesome/vue-fontawesome": "^3.0.0-5",
