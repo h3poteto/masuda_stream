@@ -1,4 +1,4 @@
-FROM node:16-alpine AS assets
+FROM node:19-alpine AS assets
 
 COPY ./assets /var/opt/app/assets
 COPY ./priv /var/opt/app/priv
