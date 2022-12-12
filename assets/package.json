@@ -9,7 +9,7 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.10",
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
-    "@fortawesome/free-solid-svg-icons": "^6.1.0",
+    "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/vue-fontawesome": "^3.0.2",
     "axios": "^0.27.2",
     "axios-progress-bar": "^1.2.0",
