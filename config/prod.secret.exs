@@ -10,7 +10,7 @@ config :masuda_stream, MasudaStream.Repo,
   database: System.get_env("DB_NAME") || "masuda_stream",
   hostname: System.get_env("DB_HOSTNAME") || "postgres",
   show_sensitive_data_on_connection_error: true,
-  pool_size: 5
+  pool_size: 3
 
 secret_key_base =
   System.get_env("SECRET_KEY_BASE") ||
