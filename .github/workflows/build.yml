@@ -1,0 +1,40 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - master
+
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: "24.2"
+          elixir-version: "1.12.3"
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+      - name: Mix install
+        run: |
+          mix local.hex --force
+          mix deps.get
+      - name: NPM install
+        working-directory: assets
+        run: |
+          npm install
+          npm run deploy
+      - name: Compile
+        run: |
+          mix local.rebar --force
+          mix deps.compile
+          mix compile
