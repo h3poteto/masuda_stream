@@ -8,6 +8,10 @@ services:
       HATENA_CONSUMER_KEY: $HATENA_CONSUMER_KEY
       HATENA_CONSUMER_SECRET: $HATENA_CONSUMER_SECRET
       ROLLBAR_ACCESS_TOKEN: $ROLLBAR_ACCESS_TOKEN
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: masuda_stream
+      DB_HOSTNAME: postgres
     working_dir: /var/opt/app
     volumes:
       - .:/var/opt/app

@@ -3,8 +3,9 @@ defmodule Mix.Tasks.Rss do
   alias MasudaStream.Tasks.RSS
 
   @shortdoc "Get recently hatena bookmark entries"
+  @requirements ["app.start"]
+
   def run(_) do
-    {:ok, _} = Application.ensure_all_started(:masuda_stream)
     RSS.rss()
   end
 end

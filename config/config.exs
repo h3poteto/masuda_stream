@@ -5,7 +5,7 @@
 # is restricted to this project.
 
 # General application configuration
-use Mix.Config
+import Config
 
 config :masuda_stream,
   ecto_repos: [MasudaStream.Repo]
@@ -31,11 +31,6 @@ config :ueberauth, Ueberauth,
   providers: [
     hatena: {Ueberauth.Strategy.Hatena, []}
   ]
-
-config :ueberauth, Ueberauth.Strategy.Hatena.OAuth,
-  consumer_key: System.get_env("HATENA_CONSUMER_KEY"),
-  consumer_secret: System.get_env("HATENA_CONSUMER_SECRET"),
-  scope: "read_public,write_public"
 
 config :rollbax, enabled: false
 
