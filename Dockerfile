@@ -1,4 +1,4 @@
-FROM ghcr.io/h3poteto/elixir-rust-node:1.12.3-rust1.58-node16-slim-buster
+FROM ghcr.io/h3poteto/elixir-rust-node:1.13.4-otp24-rust1.65-node16-slim
 
 USER root
 

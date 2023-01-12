@@ -1,13 +1,5 @@
 use Mix.Config
 
-# Configure your database
-config :masuda_stream, MasudaStream.Repo,
-  username: "postgres",
-  password: "postgres",
-  database: "masuda_stream_test",
-  hostname: System.get_env("DB_HOSTNAME") || "postgres",
-  pool: Ecto.Adapters.SQL.Sandbox
-
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
 config :masuda_stream, MasudaStreamWeb.Endpoint,
