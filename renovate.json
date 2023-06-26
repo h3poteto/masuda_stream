@@ -5,7 +5,6 @@
   ],
   "packageRules": [
     {
-      "matchLanguages": ["node"],
       "matchUpdateTypes": ["patch", "pin", "digest"],
       "automerge": true
     }
