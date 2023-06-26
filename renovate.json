@@ -2,5 +2,12 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base"
+  ],
+  "packageRules": [
+    {
+      "matchLanguages": ["node"],
+      "matchUpdateTypes": ["patch", "pin", "digest"],
+      "automerge": true
+    }
   ]
 }
