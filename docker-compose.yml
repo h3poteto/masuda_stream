@@ -2,7 +2,7 @@ version: '3'
 
 services:
   elixir:
-    image: ghcr.io/h3poteto/elixir-rust-node:1.13.4-otp24-rust1.65-node16-slim
+    image: ghcr.io/h3poteto/elixir-rust-node:1.14.2-otp25-rust1.65-node18-slim
     user: root
     environment:
       HATENA_CONSUMER_KEY: $HATENA_CONSUMER_KEY

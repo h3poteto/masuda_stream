@@ -15,11 +15,11 @@ jobs:
       - uses: actions/checkout@master
       - uses: erlef/setup-beam@v1
         with:
-          otp-version: "24.2"
-          elixir-version: "1.13.4"
+          otp-version: "25.3"
+          elixir-version: "1.14.2"
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
