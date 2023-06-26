@@ -27,7 +27,7 @@
     "@babel/preset-env": "^7.20.2",
     "@vue/compiler-sfc": "^3.2.31",
     "babel-loader": "^8.2.5",
-    "copy-webpack-plugin": "^10.2.4",
+    "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.2",
     "file-loader": "^6.2.0",
     "mini-css-extract-plugin": "^2.6.0",
