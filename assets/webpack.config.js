@@ -83,7 +83,6 @@ module.exports = (env, options) => ({
         test: /\.css$/,
         use: [
           'vue-style-loader',
-          'style-loader',
           {
             loader: 'css-loader',
             options: {
