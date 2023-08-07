@@ -13,7 +13,8 @@ config :masuda_stream, MasudaStreamWeb.Endpoint,
   url: [host: "masuda.stream", port: 80],
   debug_errors: false,
   catch_error: true,
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  server: true
 
 # Do not print debug messages in production
 config :logger, level: :info
