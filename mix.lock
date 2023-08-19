@@ -16,7 +16,6 @@
   "elixir_feed_parser": {:hex, :elixir_feed_parser, "0.0.1", "20bfddc342c401429b3910acbfd9f075037d204b6d82a467292d7fce55c8e76b", [:mix], [], "hexpm"},
   "ex_abnf": {:hex, :ex_abnf, "0.3.0", "07847d0d6cb75b779948520d02cba80eb855e18acb1aa8d43b1e370ef31afbcb", [:mix], [], "hexpm", "35030990fd9fe584a0638231f1f0c8492330bfb6d95f37a7f134dc94bd0c8f6d"},
   "ex_rfc3986": {:hex, :ex_rfc3986, "0.3.0", "d81ed5b034bae92a8354ea396910ecac9388970f8356acc4d60cf346fe679bd3", [:mix], [{:ex_abnf, "~> 0.3.0", [hex: :ex_abnf, repo: "hexpm", optional: false]}], "hexpm", "addf8f1e0949c69451ba4d1f2a233194e9b08d358c277a9489a32435db686b8c"},
-  "ex_slack_logger": {:hex, :ex_slack_logger, "0.1.1", "7eb1bd7b92fd23165ea60b924fc5557aa3bbfb0d58196b7001879b0a5ae434cb", [:mix], [{:httpoison, "~> 1.6", [hex: :httpoison, repo: "hexpm", optional: false]}, {:poison, "~> 4.0", [hex: :poison, repo: "hexpm", optional: false]}, {:timex, "~> 3.5", [hex: :timex, repo: "hexpm", optional: false]}], "hexpm", "ed37a07c5bae7984f71ffc81a74a082811b8213e234c0fc9b59f7621b68d9f66"},
   "exjson": {:hex, :exjson, "0.6.0", "6aa374ff30e5626d3d6ed18b1b829f8ffa40a7345a353f3e1e769f9917f5a704", [:mix], [], "hexpm"},
   "expo": {:hex, :expo, "0.4.1", "1c61d18a5df197dfda38861673d392e642649a9cef7694d2f97a587b2cfb319b", [:mix], [], "hexpm", "2ff7ba7a798c8c543c12550fa0e2cbc81b95d4974c65855d8d15ba7b37a1ce47"},
   "feeder": {:hex, :feeder, "2.3.2", "18792e18ae2928885e1859ecfbac6fc7a2ec6e99efa51828160e530b2a188c8b", [:make], [], "hexpm"},
