@@ -44,7 +44,7 @@ defmodule MasudaStream.MixProject do
       {:gettext, "~> 0.23"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.1"},
-      {:httpoison, "~> 1.6"},
+      {:httpoison, "~> 2.0"},
       {:floki, "~> 0.34.0"},
       {:html5ever, "~> 0.15.0"},
       {:plug, "~> 1.0"},
