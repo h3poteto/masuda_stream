@@ -53,7 +53,7 @@ defmodule MasudaStream.MixProject do
       {:quinn, "~> 1.1"},
       {:timex, "~> 3.5"},
       {:credo, "~> 1.7.0", only: [:dev, :test], runtime: false},
-      {:ueberauth_hatena, "~> 0.1.0"},
+      {:ueberauth_hatena, "~> 0.2.0"},
       {:oauther, "~> 1.1"},
       {:poison, "~> 4.0"},
       {:quantum, "~> 3.3"},
