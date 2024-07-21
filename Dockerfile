@@ -1,4 +1,4 @@
-FROM ghcr.io/h3poteto/elixir-rust-node:1.15.1-rust1.70-node20-slim as builder
+FROM ghcr.io/h3poteto/elixir-rust-node:1.17.2-rust1.79-node20-slim as builder
 
 USER root
 
@@ -39,7 +39,7 @@ RUN mix do compile, release
 
 # start a new build stage so that the final image will only contain
 # the compiled release and other runtime necessities
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 
 RUN apt-get update -y && apt-get install -y libstdc++6 openssl libncurses5 locales imagemagick \
   && apt-get clean && rm -f /var/lib/apt/lists/*_*
