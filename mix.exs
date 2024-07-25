@@ -46,7 +46,7 @@ defmodule MasudaStream.MixProject do
       {:phoenix_html, "~> 3.1"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_view, "~> 2.0"},
-      {:gettext, "~> 0.23"},
+      {:gettext, "~> 0.24"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.1"},
       {:httpoison, "~> 2.0"},
