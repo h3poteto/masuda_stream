@@ -9,6 +9,11 @@ defmodule MasudaStream.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:leex] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
+      releases: [
+        masuda_stream: [
+          applications: [opentelemetry: :temporary]
+        ]
+      ],
       aliases: aliases(),
       deps: deps()
     ]
@@ -52,12 +57,17 @@ defmodule MasudaStream.MixProject do
       # To parse RSS 1.0
       {:quinn, "~> 1.1"},
       {:timex, "~> 3.5"},
-      {:credo, "~> 1.7.0", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.7.7", only: [:dev, :test], runtime: false},
       {:ueberauth_hatena, "~> 0.2.0"},
       {:oauther, "~> 1.1"},
       {:poison, "~> 5.0"},
       {:quantum, "~> 3.3"},
-      {:rollbax, "~> 0.11"}
+      {:rollbax, "~> 0.11"},
+      {:opentelemetry, "~> 1.4.0"},
+      {:opentelemetry_phoenix, "~> 1.2.0"},
+      {:opentelemetry_cowboy, "~> 0.3.0"},
+      {:opentelemetry_exporter, "~> 1.7.0"},
+      {:opentelemetry_ecto, "~> 1.2.0"}
     ]
   end
 

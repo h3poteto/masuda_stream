@@ -10,6 +10,12 @@ if config_env() == :prod do
     environment: "production",
     enable_crash_reports: true,
     enabled: true
+
+  config :opentelemetry, :processors,
+    otel_batch_processor: %{
+      exporter:
+        {:opentelemetry_exporter, %{endpoints: [System.fetch_env!("OTEL_EXPORTER_ENDPOINT")]}}
+    }
 end
 
 config :ueberauth, Ueberauth.Strategy.Hatena.OAuth,

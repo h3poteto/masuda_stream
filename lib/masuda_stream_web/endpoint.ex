@@ -43,4 +43,6 @@ defmodule MasudaStreamWeb.Endpoint do
     signing_salt: "ON7m6z/Y"
 
   plug MasudaStreamWeb.Router
+
+  plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
 end

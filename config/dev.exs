@@ -77,3 +77,5 @@ config :rollbax,
   environment: "development",
   enable_crash_reports: true,
   enabled: :log
+
+config :opentelemetry, traces_exporter: {:otel_exporter_stdout, []}

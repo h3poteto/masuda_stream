@@ -6,6 +6,10 @@ defmodule MasudaStream.Application do
   use Application
 
   def start(_type, _args) do
+    :opentelemetry_cowboy.setup()
+    OpentelemetryPhoenix.setup(adapter: :cowboy2)
+    OpentelemetryEcto.setup([:masuda_stream, :repo], [{:db_statement, :enabled}])
+
     # List all child processes to be supervised
     children = [
       # Start the PubSub system
