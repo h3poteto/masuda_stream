@@ -59,7 +59,7 @@ defmodule MasudaStream.MixProject do
       {:credo, "~> 1.7.7", only: [:dev, :test], runtime: false},
       {:ueberauth_hatena, "~> 0.2.0"},
       {:oauther, "~> 1.1"},
-      {:poison, "~> 5.0"},
+      {:poison, "~> 6.0"},
       {:quantum, "~> 3.3"},
       {:rollbax, "~> 0.11"},
       {:opentelemetry, "~> 1.4.0"},
