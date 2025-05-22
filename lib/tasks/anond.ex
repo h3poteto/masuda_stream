@@ -41,6 +41,7 @@ defmodule MasudaStream.Tasks.Anond do
 
   defp parse(body) do
     body
+    |> Floki.parse_document!()
     |> Floki.find("div.section")
     |> Enum.map(fn element -> children(element) end)
     |> Enum.flat_map(fn element -> element end)

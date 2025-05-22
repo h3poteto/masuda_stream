@@ -19,6 +19,9 @@ defmodule MasudaStream.Tasks.RSS do
     |> Enum.map(fn item ->
       item |> parse()
     end)
+    |> Enum.filter(fn item ->
+      anond_page?(item.link)
+    end)
     |> Enum.map(fn item ->
       item |> save_entry()
     end)
@@ -84,6 +87,12 @@ defmodule MasudaStream.Tasks.RSS do
 
     posted_at
     |> Timex.parse!("{ISO:Extended:Z}")
+  end
+
+  defp anond_page?(link) do
+    # Sometimes, keyword page is included in the RSS.
+    # e.g. https://anond.hatelabo.jp/search?word=%E3%82%B5%E3%82%AC%E3%83%83%E3%83%88%E3%80%8C%E6%84%9B%E3%81%8C%E3%83%BC%E3%80%81%E6%84%9B%E3%81%8C%E3%83%BC%E3%80%81%E6%84%9B%E3%81%8C%E3%81%82%E3%81%A3%E3%81%9F%E3%81%AE%E3%81%8B%E3%80%8D&search=%E6%A4%9C%E7%B4%A2
+    Regex.match?(~r/#{@anond_url}\/\d+/, link)
   end
 
   defp save_entry(%{
