@@ -16,7 +16,9 @@ jobs:
   build:
     name: Docker build
     runs-on: ubuntu-latest
-
+    concurrency:
+      group: build-${{ github.ref }}
+      cancel-in-progress: true
 
     steps:
       - uses: actions/checkout@v4
