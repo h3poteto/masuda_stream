@@ -53,7 +53,6 @@ defmodule MasudaStream.MixProject do
       {:floki, "~> 0.36.0"},
       {:html5ever, "~> 0.16.0"},
       {:plug, "~> 1.0"},
-      {:json, "~> 1.2"},
       # To parse RSS 1.0
       {:quinn, "~> 1.1"},
       {:timex, "~> 3.5"},
