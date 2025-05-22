@@ -1,3 +1,4 @@
-elixir 1.17.3
-erlang 26.2.5
-rust 1.86.0
+elixir 1.18.3
+erlang 27.3
+rust 1.87.0
+nodejs 22.14.0
