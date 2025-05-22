@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   elixir:
     image: ghcr.io/h3poteto/elixir-rust-node:1.18.3-rust1.87-node22-slim
