@@ -7,6 +7,12 @@
 # General application configuration
 import Config
 
+config :masuda_stream, Oban,
+  engine: Oban.Engines.Basic,
+  notifier: Oban.Notifiers.Postgres,
+  queues: [default: 10],
+  repo: MasudaStream.Repo
+
 config :masuda_stream,
   ecto_repos: [MasudaStream.Repo]
 

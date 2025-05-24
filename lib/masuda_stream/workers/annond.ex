@@ -1,8 +1,17 @@
-defmodule MasudaStream.Tasks.Anond do
+defmodule MasudaStream.Workers.Anond do
+  use Oban.Worker, queue: :default, max_attempts: 3
   require Logger
   alias MasudaStream.Repo
+  alias MasudaStream.Hatena.Entry
 
   @keyword_host "https://anond.hatelabo.jp"
+
+  @impl Oban.Worker
+  def perform(%Oban.Job{args: %{"entry_id" => entry_id}}) do
+    entry = Repo.get!(Entry, entry_id)
+    fetch(entry)
+    :ok
+  end
 
   def fetch(%MasudaStream.Hatena.Entry{} = entry) do
     get(entry.link)
@@ -26,7 +35,7 @@ defmodule MasudaStream.Tasks.Anond do
         body |> parse()
 
       {:ok, %HTTPoison.Response{status_code: 404}} ->
-        Logger.warn("#{url} returns 404")
+        Logger.warning("#{url} returns 404")
         {:error}
 
       {:ok, %HTTPoison.Response{status_code: status}} ->
