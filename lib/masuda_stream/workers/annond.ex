@@ -95,7 +95,7 @@ defmodule MasudaStream.Workers.Anond do
   defp rectangle?(element) do
     element
     |> Floki.attribute("id")
-    |> Enum.any?(fn id -> id == "rectangle-middle" || id == "ad-entry-sp5" end)
+    |> Enum.any?(fn id -> id == "rectangle-middle" || id == "ad-entry-sp-5" end)
   end
 
   defp section_footer?(element) do
