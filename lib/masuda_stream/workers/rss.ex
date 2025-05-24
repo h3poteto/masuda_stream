@@ -126,9 +126,12 @@ defmodule MasudaStream.Workers.RSS do
 
   def fetch_anonds(entries) do
     entries
-    |> Enum.each(fn entry ->
+    |> Enum.with_index()
+    |> Enum.each(fn {entry, index} ->
       %{"entry_id" => entry.id}
-      |> MasudaStream.Workers.Anond.new()
+      |> MasudaStream.Workers.Anond.new(
+        scheduled_at: DateTime.utc_now() |> DateTime.add(index, :second)
+      )
       |> Oban.insert()
     end)
 
@@ -137,9 +140,12 @@ defmodule MasudaStream.Workers.RSS do
 
   def fetch_bookmarks(entries) do
     entries
-    |> Enum.each(fn entry ->
+    |> Enum.with_index()
+    |> Enum.each(fn {entry, index} ->
       %{"entry_id" => entry.id}
-      |> MasudaStream.Workers.Bookmark.new()
+      |> MasudaStream.Workers.Bookmark.new(
+        scheduled_at: DateTime.utc_now() |> DateTime.add(index, :second)
+      )
       |> Oban.insert()
     end)
   end
