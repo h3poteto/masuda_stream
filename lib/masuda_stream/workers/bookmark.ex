@@ -1,4 +1,5 @@
-defmodule MasudaStream.Tasks.Bookmark do
+defmodule MasudaStream.Workers.Bookmark do
+  use Oban.Worker, queue: :default, max_attempts: 3
   require Logger
   alias MasudaStream.Hatena.Entry
   alias MasudaStream.Hatena.EntryBookmark
@@ -6,6 +7,13 @@ defmodule MasudaStream.Tasks.Bookmark do
   alias MasudaStream.Repo
 
   @bookmark_url "https://b.hatena.ne.jp/entry/jsonlite/?url="
+
+  @impl Oban.Worker
+  def perform(%Oban.Job{args: %{"entry_id" => entry_id}}) do
+    entry = Repo.get!(Entry, entry_id)
+    fetch(entry)
+    :ok
+  end
 
   def fetch(%Entry{} = entry) do
     response = get(entry.link)

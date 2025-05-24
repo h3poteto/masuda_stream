@@ -66,10 +66,12 @@ config :phoenix, :stacktrace_depth, 20
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
 
-config :masuda_stream, MasudaStream.Scheduler,
-  jobs: [
-    # Every 15 minutes
-    {"*/2 * * * *", {MasudaStream.Tasks.RSS, :rss, []}}
+config :masuda_stream, Oban,
+  plugins: [
+    {Oban.Plugins.Cron,
+     crontab: [
+       {"*/2 * * * *", MasudaStream.Workers.RSS, args: %{}, queue: :default}
+     ]}
   ]
 
 config :rollbax,

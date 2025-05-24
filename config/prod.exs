@@ -20,10 +20,12 @@ config :masuda_stream, MasudaStreamWeb.Endpoint,
 config :logger, level: :info
 config :logger, backends: [:console]
 
-config :masuda_stream, MasudaStream.Scheduler,
-  jobs: [
-    # Every 15 minutes
-    {"*/15 * * * *", {MasudaStream.Tasks.RSS, :rss, []}}
+config :masuda_stream, Oban,
+  plugins: [
+    {Oban.Plugins.Cron,
+     crontab: [
+       {"*/15 * * * *", MasudaStream.Workers.RSS, args: %{}, queue: :default}
+     ]}
   ]
 
 # ## SSL Support

@@ -1,4 +1,5 @@
-defmodule MasudaStream.Tasks.RSS do
+defmodule MasudaStream.Workers.RSS do
+  use Oban.Worker, queue: :default, max_attempts: 3
   use Timex
   require Logger
   alias MasudaStream.Hatena.Entry
@@ -7,7 +8,12 @@ defmodule MasudaStream.Tasks.RSS do
   @hatena_domain "https://b.hatena.ne.jp"
   @anond_url "https://anond.hatelabo.jp"
 
-  def rss do
+  @impl Oban.Worker
+  def perform(%Oban.Job{}) do
+    rss()
+  end
+
+  def rss() do
     fetch()
   rescue
     exception ->
@@ -119,29 +125,22 @@ defmodule MasudaStream.Tasks.RSS do
   end
 
   def fetch_anonds(entries) do
-    {:ok, pid} = Task.Supervisor.start_link()
-
-    _ =
-      entries
-      |> Enum.map(fn entry ->
-        Task.Supervisor.async_nolink(pid, MasudaStream.Tasks.Anond, :fetch, [entry])
-      end)
-      |> Enum.map(fn task ->
-        Task.await(task, 60_000)
-      end)
+    entries
+    |> Enum.each(fn entry ->
+      %{"entry_id" => entry.id}
+      |> MasudaStream.Workers.Anond.new()
+      |> Oban.insert()
+    end)
 
     entries
   end
 
   def fetch_bookmarks(entries) do
-    {:ok, pid} = Task.Supervisor.start_link()
-
     entries
-    |> Enum.map(fn entry ->
-      Task.Supervisor.async_nolink(pid, MasudaStream.Tasks.Bookmark, :fetch, [entry])
-    end)
-    |> Enum.map(fn task ->
-      Task.await(task, 60_000)
+    |> Enum.each(fn entry ->
+      %{"entry_id" => entry.id}
+      |> MasudaStream.Workers.Bookmark.new()
+      |> Oban.insert()
     end)
   end
 end
