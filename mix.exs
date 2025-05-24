@@ -60,7 +60,6 @@ defmodule MasudaStream.MixProject do
       {:ueberauth_hatena, "~> 0.2.0"},
       {:oauther, "~> 1.1"},
       {:poison, "~> 6.0"},
-      {:quantum, "~> 3.3"},
       {:rollbax, "~> 0.11"},
       {:opentelemetry, "~> 1.4.0"},
       {:opentelemetry_phoenix, "~> 1.2.0"},
