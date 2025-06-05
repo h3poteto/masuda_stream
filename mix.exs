@@ -62,8 +62,8 @@ defmodule MasudaStream.MixProject do
       {:poison, "~> 6.0"},
       {:rollbax, "~> 0.11"},
       {:opentelemetry, "~> 1.5.0"},
-      {:opentelemetry_phoenix, "~> 1.2.0"},
-      {:opentelemetry_cowboy, "~> 0.3.0"},
+      {:opentelemetry_phoenix, "~> 2.0.0"},
+      {:opentelemetry_cowboy, "~> 1.0.0"},
       {:opentelemetry_exporter, "~> 1.8.0"},
       {:opentelemetry_ecto, "~> 1.2.0"},
       {:oban, "~> 2.19"}
