@@ -20,6 +20,7 @@ services:
       - postgres:postgres
     ports:
       - "4000:4000"
+      - "9568:9568" # telemetry_metrics_proemtheus
     command: /bin/bash
 
   postgres:

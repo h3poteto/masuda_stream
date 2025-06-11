@@ -66,7 +66,10 @@ defmodule MasudaStream.MixProject do
       {:opentelemetry_cowboy, "~> 1.0.0"},
       {:opentelemetry_exporter, "~> 1.8.0"},
       {:opentelemetry_ecto, "~> 1.2.0"},
-      {:oban, "~> 2.19"}
+      {:oban, "~> 2.19"},
+      {:telemetry_metrics, "~> 1.0"},
+      {:telemetry_poller, "~> 1.0"},
+      {:telemetry_metrics_prometheus, "~> 1.0"}
     ]
   end
 

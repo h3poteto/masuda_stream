@@ -18,9 +18,10 @@ defmodule MasudaStream.Application do
       MasudaStream.Repo,
       # Start the endpoint when the application starts
       MasudaStreamWeb.Endpoint,
-      {Oban, Application.fetch_env!(:masuda_stream, Oban)}
+      {Oban, Application.fetch_env!(:masuda_stream, Oban)},
       # Starts a worker by calling: MasudaStream.Worker.start_link(arg)
       # {MasudaStream.Worker, arg},
+      MasudaStreamWeb.Telemetry
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
