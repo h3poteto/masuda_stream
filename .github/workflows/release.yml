@@ -83,7 +83,7 @@ jobs:
           cd k8s-services
           git init
           git checkout -b update-masudastream-image-${{ github.sha }}
-          cd external-prd/services/masudastream
+          cd external/services/masudastream
           kustomize edit set image "elixir=${{ env.ECR }}:sha-${{ github.sha }}"
           git add .
           git commit -m "Update docker image for masudastream to ${{ github.sha }}"
