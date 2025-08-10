@@ -50,7 +50,7 @@ defmodule MasudaStream.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.1"},
       {:httpoison, "~> 2.0"},
-      {:floki, "~> 0.37.0"},
+      {:floki, "~> 0.38.0"},
       {:html5ever, "~> 0.16.0"},
       {:plug, "~> 1.0"},
       # To parse RSS 1.0
