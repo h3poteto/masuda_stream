@@ -69,7 +69,8 @@ defmodule MasudaStream.MixProject do
       {:oban, "~> 2.19"},
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
-      {:telemetry_metrics_prometheus, "~> 1.0"}
+      {:telemetry_metrics_prometheus, "~> 1.0"},
+      {:cachex, "~> 4.0"}
     ]
   end
 

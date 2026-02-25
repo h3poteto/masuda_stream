@@ -125,13 +125,17 @@ defmodule MasudaStream.Workers.Anond do
   end
 
   defp save_anond(content_html, %MasudaStream.Hatena.Entry{} = entry) do
-    case Repo.get_by(MasudaStream.Anond, entry_id: entry.id) do
-      nil -> %MasudaStream.Anond{entry_id: entry.id}
-      anond -> anond
-    end
-    |> MasudaStream.Anond.changeset(%{
-      "content_html" => content_html
-    })
-    |> Repo.insert_or_update!()
+    result =
+      case Repo.get_by(MasudaStream.Anond, entry_id: entry.id) do
+        nil -> %MasudaStream.Anond{entry_id: entry.id}
+        anond -> anond
+      end
+      |> MasudaStream.Anond.changeset(%{
+        "content_html" => content_html
+      })
+      |> Repo.insert_or_update!()
+
+    MasudaStream.Cache.invalidate_entry(entry.id)
+    result
   end
 end

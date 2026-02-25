@@ -18,9 +18,14 @@ defmodule MasudaStream.Workers.Bookmark do
   def fetch(%Entry{} = entry) do
     response = get(entry.link)
 
-    response
-    |> save_detail(entry)
-    |> save_bookmarks(response)
+    result =
+      response
+      |> save_detail(entry)
+      |> save_bookmarks(response)
+
+    MasudaStream.Cache.invalidate_entry(entry.id)
+    MasudaStream.Cache.invalidate_bookmarks(entry.id)
+    result
   end
 
   def get(url) do
