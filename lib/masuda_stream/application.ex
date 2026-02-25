@@ -21,7 +21,8 @@ defmodule MasudaStream.Application do
       {Oban, Application.fetch_env!(:masuda_stream, Oban)},
       # Starts a worker by calling: MasudaStream.Worker.start_link(arg)
       # {MasudaStream.Worker, arg},
-      MasudaStreamWeb.Telemetry
+      MasudaStreamWeb.Telemetry,
+      {Cachex, name: :api_cache}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

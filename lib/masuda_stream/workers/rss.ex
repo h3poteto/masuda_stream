@@ -21,16 +21,21 @@ defmodule MasudaStream.Workers.RSS do
   end
 
   def fetch() do
-    get()
-    |> Enum.map(fn item ->
-      item |> parse()
-    end)
-    |> Enum.filter(fn item ->
-      anond_page?(item.link)
-    end)
-    |> Enum.map(fn item ->
-      item |> save_entry()
-    end)
+    entries =
+      get()
+      |> Enum.map(fn item ->
+        item |> parse()
+      end)
+      |> Enum.filter(fn item ->
+        anond_page?(item.link)
+      end)
+      |> Enum.map(fn item ->
+        item |> save_entry()
+      end)
+
+    MasudaStream.Cache.invalidate_entries()
+
+    entries
     |> fetch_anonds()
     |> fetch_bookmarks()
   end
