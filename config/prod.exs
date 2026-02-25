@@ -24,7 +24,8 @@ config :masuda_stream, Oban,
   plugins: [
     {Oban.Plugins.Cron,
      crontab: [
-       {"*/15 * * * *", MasudaStream.Workers.RSS, args: %{}, queue: :default}
+       {"*/15 * * * *", MasudaStream.Workers.RSS, args: %{}, queue: :default},
+       {"0 0 * * *", MasudaStream.Workers.Cleaner, args: %{}, queue: :default}
      ]}
   ]
 

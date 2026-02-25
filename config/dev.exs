@@ -70,9 +70,12 @@ config :masuda_stream, Oban,
   plugins: [
     {Oban.Plugins.Cron,
      crontab: [
-       {"*/2 * * * *", MasudaStream.Workers.RSS, args: %{}, queue: :default}
+       {"*/2 * * * *", MasudaStream.Workers.RSS, args: %{}, queue: :default},
+       {"*/10 * * * *", MasudaStream.Workers.Cleaner, args: %{}, queue: :default}
      ]}
   ]
+
+config :masuda_stream, MasudaStream.Workers.Cleaner, days_to_keep: 1
 
 config :rollbax,
   access_token: System.get_env("ROLLBAR_ACCESS_TOKEN"),
