@@ -9,11 +9,6 @@ defmodule MasudaStream.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:leex] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
-      releases: [
-        masuda_stream: [
-          applications: [opentelemetry: :temporary]
-        ]
-      ],
       aliases: aliases(),
       deps: deps()
     ]
@@ -61,11 +56,6 @@ defmodule MasudaStream.MixProject do
       {:oauther, "~> 1.1"},
       {:poison, "~> 6.0"},
       {:rollbax, "~> 0.11"},
-      {:opentelemetry, "~> 1.5.0"},
-      {:opentelemetry_phoenix, "~> 2.0.0"},
-      {:opentelemetry_cowboy, "~> 1.0.0"},
-      {:opentelemetry_exporter, "~> 1.8.0"},
-      {:opentelemetry_ecto, "~> 1.2.0"},
       {:oban, "~> 2.19"},
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
